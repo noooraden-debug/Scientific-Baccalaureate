@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧪 الموسوعة التفاعلية في الكيمياء - سلسلة الذكي | بكالوريا علمي 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #059669; /* Emerald Green */
+    --primary-light: #10b981;
+    --primary-pale: #ecfdf5;
+    --accent: #f59e0b; /* Amber */
+    --accent-light: #fbbf24;
+    --accent-pale: #fffbeb;
+    --red: #ef4444;
+    --dark: #1e293b;
+    --text: #334155;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #064e3b 0%, #059669 50%, #10b981 100%);
+    color: white;
+    padding: 50px 20px 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.2);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(251,191,36,0.15) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 900;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    margin-top: 12px;
+    color: var(--accent-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.88rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.75); padding: 16px 20px; cursor: pointer;
+    font-size: 0.9rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--accent-light); border-bottom-color: var(--accent-light); background: rgba(255,255,255,0.03);
+  }
+  .back-link {
+    margin-right: auto; color: var(--accent-light); text-decoration: none; font-size: 0.85rem; font-weight: 700; padding: 16px 10px; transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 15px; }
+  .section { display: none; animation: slideIn 0.35s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.03); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 5px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.85rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: white; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+  }
+  .unit-info h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; color: #064e3b; }
+  .unit-meta { font-size: 0.85rem; color: #64748b; font-weight: 600; display: flex; gap: 10px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 25px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 22px; margin-bottom: 20px;
+    border-right: 4px solid var(--primary-light);
+  }
+  .lesson-block h3 { font-size: 1.15rem; font-weight: 800; color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+  .lesson-block p { margin-bottom: 10px; font-weight: 500; color: #475569; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 10px 0; font-weight: 600; }
+  .lesson-block li { margin-bottom: 8px; }
+
+  .key-term {
+    display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white; border-radius: 6px; padding: 2px 10px; font-size: 0.85rem; font-weight: 700; margin: 2px 4px;
+    direction: ltr; 
+  }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 14px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 12px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; }
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: #451a03; border: none; border-radius: 8px; padding: 10px 22px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 800; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 15px 20px; margin: 10px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 600;
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #064e3b, #022c22); color: white; border-radius: 14px; padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: flex-end; }
+  .sim-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
+  .sim-field label { font-size: 0.88rem; color: var(--accent-light); font-weight: bold; }
+  .sim-field select, .sim-field input { padding: 12px; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.1); color: white; font-family: 'Cairo', sans-serif; font-weight: bold; text-align: center;}
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; margin-top: 20px; border-right: 4px solid var(--accent-light);
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 25px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.1rem; margin-bottom: 15px; color: var(--dark); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 14px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; text-align: right; transition: all 0.2s; font-weight: 700;
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #d1fae5; border-color: #10b981; color: #065f46; }
+  .quiz-opt.wrong { background: #ffe4e6; border-color: #e11d48; color: #881337; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 20px; margin: 20px 0; display: flex; gap: 15px; }
+  .gold-tip .icon { font-size: 1.6rem; }
+  .gold-tip .text { font-size: 0.95rem; color: #78350f; font-weight: 700; }
+
+  @media(max-width: 600px) { .sim-row { flex-direction: column; align-items: stretch; } }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🧪 الموسوعة التفاعلية في الكيمياء</h1>
+  <div class="subtitle">سلسلة الذكي | البكالوريا العلمي السوري 2026 المطوّر</div>
+  <div class="badge-row">
+    <span class="badge">☢️ الكيمياء النووية</span>
+    <span class="badge">⚖️ الحركية والتوازن</span>
+    <span class="badge">🔬 الكيمياء التحليلية</span>
+    <span class="badge">⚗️ الكيمياء العضوية</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الفهرس والاستراتيجية</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 تفصيل الوحدات والدروس</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🧮 محاكي الـ pH الذكي</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الاختبارات المؤتمتة</button>
+  <a href="#" class="back-link">↩️ اللوحة الرئيسية</a>
+</nav>
+
+<div class="container">
+
+<!-- قسم الفهرس والاستراتيجية -->
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 12px; text-align: center;">🎯 الخريطة الذهنية لورقة امتحان الكيمياء (200 درجة)</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569;">وفقاً للتحديثات الأخيرة لمنهاج 2026، تعتمد ورقة الامتحان على الربط بين الفهم النظري الدقيق (تعاليل، خيارات متعددة، تسميات عضوية) وحل المسائل الحسابية (سرعة التفاعل، المعايرة، الأملاح).</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>الوحدة الدراسية</th>
+            <th>التركيز الامتحاني الاستراتيجي</th>
+            <th>نوع المسائل المتوقعة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1. الكيمياء النووية ☢️</td><td>تفاعلات التفكك (ألفا، بيتا)، عمر النصف</td><td>مسألة حساب عمر النصف أو إكمال تفاعل نووي</td></tr>
+          <tr><td>2. الحركية والتوازن ⚖️</td><td>قاعدة لوشاتولييه، رتبة التفاعل، ثابت التوازن</td><td>مسألة حساب تراكيز التوازن (Kc) أو سرعة التفاعل</td></tr>
+          <tr><td>3. الكيمياء التحليلية 🔬</td><td>تحديد الأزواج المترافقة (برونشتد-لوري)، الحلمهة</td><td>مسألة معايرة (حمض قوي/أساس قوي) أو جداء الذوبان (Ksp)</td></tr>
+          <tr><td>4. الكيمياء العضوية ⚗️</td><td>التسمية الدولية (IUPAC)، الخواص الكيميائية</td><td>كتابة معادلات التصبن، الأسترة، والأكسدة الإرجاعية</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>القاعدة الذهبية في الكيمياء:</strong> كتابة المعادلة الكيميائية موزونة بشكل صحيح مع ذكر الحالة الفيزيائية (s, l, g, aq) هي نصف الحل في أي مسألة. الانتباه إلى توحيد الواحدات (خاصة الحجم باللتر في قوانين التركيز).
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- قسم تفصيل الوحدات -->
+<div id="units" class="section">
+
+  <!-- الوحدة الأولى -->
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: الكيمياء النووية (Nuclear Chemistry)</h2>
+        <div class="unit-meta"><span>☢️ النشاط الإشعاعي</span><span>⏱️ عمر النصف</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: بنية النواة والنشاط الإشعاعي</h3>
+        <p>دراسة الجسيمات المنبعثة من النوى غير المستقرة لتحقيق الاستقرار:</p>
+        <ul>
+          <li><strong>إصدار جسيم ألفا (α):</strong> ينقص العدد الذري (Z) بمقدار 2 والعدد الكتلي (A) بمقدار 4. الرمز: <span class="key-term">He(4,2)</span>.</li>
+          <li><strong>إصدار جسيم بيتا (β):</strong> يزداد العدد الذري بمقدار 1 ولا يتغير العدد الكتلي (تحول نترون إلى بروتون). الرمز: <span class="key-term">e(0,-1)</span>.</li>
+          <li><strong>أشعة غاما (γ):</strong> أمواج كهرطيسية عالية الطاقة ترافق التحولات النووية، لا تغير (A) ولا (Z).</li>
+        </ul>
+      </div>
+      
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: التفاعلات النووية وعمر النصف</h3>
+        <ul>
+          <li><strong>تفاعلات التطافر (الالتقاط):</strong> قذف نواة بجسيم كالنترون أو البروتون لتكوين نواة جديدة.</li>
+          <li><strong>الانشطار النووي:</strong> انقسام نواة ثقيلة (مثل اليورانيوم 235) إلى نواتين متوسطتين مع تحرير طاقة هائلة ونترونات.</li>
+          <li><strong>قانون عمر النصف (T½):</strong> الزمن اللازم لتفكك نصف عدد نوى العينة المشعة. <br>العلاقة: <span class="key-term">N = N0 / 2ⁿ</span> (حيث n عدد مرات التفكك).</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u1-1')">📝 سؤال امتحاني: ماذا يحدث لنواة عندما تطلق بوزيترون؟ ▼</button>
+        <div class="reveal-box" id="rev-u1-1">
+          <strong>الجواب النموذجي:</strong> عند إطلاق بوزيترون <span class="key-term">e(0,+1)</span> يتحول أحد البروتونات داخل النواة إلى نترون، فينقص العدد الذري (Z) بمقدار 1، ويبقى العدد الكتلي (A) ثابتاً، لتنتج نواة عنصر جديد.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الوحدة الثانية -->
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: الحركية والتوازن الكيميائي</h2>
+        <div class="unit-meta"><span>⏱️ سرعة التفاعل</span><span>⚖️ ثابت التوازن Kc</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: الحركية الكيميائية (سرعة التفاعل)</h3>
+        <p>تدرس العوامل المؤثرة في سرعة التفاعلات وآلية حدوثها.</p>
+        <ul>
+          <li><strong>قانون سرعة التفاعل:</strong> لتفاعل أولي aA + bB → cC، تعطى السرعة بـ: <span class="key-term">V = k.[A]^a.[B]^b</span>.</li>
+          <li><strong>العوامل المؤثرة:</strong> طبيعة المواد المتفاعلة، درجة الحرارة (تزيد السرعة لزيادة التصادمات الفعالة)، التركيز، والوسيط.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: التوازن الكيميائي وقاعدة لوشاتولييه</h3>
+        <table class="summary-table">
+          <tr><th>المؤثر الخارجي</th><th>تأثيره على حالة التوازن</th><th>تأثيره على ثابت التوازن Kc</th></tr>
+          <tr><td>زيادة تركيز المواد المتفاعلة</td><td>ينزاح بالاتجاه المباشر (1)</td><td>لا يتغير</td></tr>
+          <tr><td>زيادة الضغط (نقصان الحجم)</td><td>ينزاح نحو عدد المولات الغازية الأقل</td><td>لا يتغير</td></tr>
+          <tr><td>رفع درجة الحرارة</td><td>ينزاح بالاتجاه الماص للحرارة</td><td>يتغير (حسب نوع التفاعل)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- الوحدة الثالثة -->
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: الكيمياء التحليلية (Analytical)</h2>
+        <div class="unit-meta"><span>⚗️ الحموض والأسس</span><span>🧪 الأملاح والمعايرة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 نظريات الحموض والأسس</h3>
+        <ul>
+          <li><strong>أرهينيوس:</strong> الحمض يعطي H+ والأساس يعطي OH- في المحلول المائي.</li>
+          <li><strong>برونشتد - لوري:</strong> الحمض مانح للبروتون (H+)، والأساس مستقبل للبروتون. (تشكيل أزواج مترافقة حمض/أساس).</li>
+          <li><strong>لويس:</strong> الحمض مستقبل لزوج إلكتروني، والأساس مانح لزوج إلكتروني.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الأملاح والمعايرة الحجمية</h3>
+        <p>المعايرة هي عملية تحديد تركيز مجهول لمحلول حمضي أو أساسي باستخدام محلول قياسي معلوم التركيز.</p>
+        <ul>
+          <li><strong>نقطة التكافؤ:</strong> النقطة التي تتعادل فيها كمية الحمض مع كمية الأساس (عدد مولات H3O+ = عدد مولات OH-).</li>
+          <li><strong>جداء الذوبان (Ksp):</strong> يطبق على الأملاح شحيحة الذوبان. الترسيب يحدث عندما يكون الجداء الأيوني Q > Ksp.</li>
+          <li><strong>الـ pH في المعايرة:</strong> عند معايرة حمض قوي بأساس قوي يكون الـ pH = 7 عند نقطة التكافؤ.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- الوحدة الرابعة -->
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">4</div>
+      <div class="unit-info">
+        <h2>الوحدة الرابعة: الكيمياء العضوية (Organic Chemistry)</h2>
+        <div class="unit-meta"><span>🔗 الأغوال والألدهيدات</span><span>🧬 الحموض الكربوكسيلية والمشتقات</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الزمر الوظيفية والتسمية</h3>
+        <p>التركيز الامتحاني في منهج 2026 يعتمد على التسمية الدولية (IUPAC) والتفاعلات المميزة لكل زمرة:</p>
+        <ul>
+          <li><strong>الأغوال (Alcohols):</strong> تحوي زمرة الهيدروكسيل (-OH). اللاحقة "ول". تخضع لتفاعلات الأكسدة والإرجاع وحذف الماء.</li>
+          <li><strong>الألدهيدات والكيتونات:</strong> تحوي زمرة الكربونيل (C=O). الألدهيدات تتأكسد لتشكل حموض كربوكسيلية (تُرجع كاشف تولن وفهلنغ)، بينما الكيتونات لا تتأكسد بسهولة.</li>
+          <li><strong>الحموض الكربوكسيلية (Acids):</strong> تحوي زمرة الكربوكسيل (-COOH). اللاحقة "ويك". تتفاعل مع الأغوال لتشكل الأسترات.</li>
+          <li><strong>الأسترات (Esters):</strong> تنتج من تفاعل الأسترة (حمض + غول ⇌ أستر + ماء). تتميز بروائحها العطرية وتخضع لتفاعل التصبن مع أساس قوي.</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u4-1')">⚗️ تعليل امتحاني: لماذا درجة غليان الحموض الكربوكسيلية أعلى من الأغوال المقابلة؟ ▼</button>
+        <div class="reveal-box" id="rev-u4-1">
+          <strong>الجواب:</strong> لأن جزيئات الحموض الكربوكسيلية قادرة على تشكيل رابطتين هيدروجينيتين بين كل جزيئين (تشكيل ثنائيات جزيئية Dimers)، مما يزيد من قوة الترابط بين الجزيئات ويتطلب طاقة حرارية أكبر لتفكيكها، بينما الأغوال تشكل رابطة هيدروجينية واحدة.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- قسم المحاكي -->
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🧮 محاكي الكيمياء التحليلية: حساب الـ pH وطبيعة المحلول</h2>
+    <p style="text-align:center; margin-bottom:20px; font-weight:600; color:#64748b;">أدخل تركيز شوارد الهيدرونيوم [H3O+] في المحلول المائي لمعرفة قيمة الأس الهيدروجيني (pH) وتحديد ما إذا كان المحلول حمضياً، معتدلاً، أو أساسياً.</p>
+
+    <div class="sim-box">
+      <div class="sim-row">
+        <div class="sim-field">
+          <label>🧪 تركيز شوارد الهيدرونيوم [H3O+] (بالمول/لتر)</label>
+          <select id="h3oConc" onchange="calculatePH()">
+            <option value="1e-1">10⁻¹ mol/L (0.1)</option>
+            <option value="1e-3">10⁻³ mol/L (0.001)</option>
+            <option value="1e-5">10⁻⁵ mol/L (0.00001)</option>
+            <option value="1e-7" selected>10⁻⁷ mol/L (ماء مقطر)</option>
+            <option value="1e-9">10⁻⁹ mol/L</option>
+            <option value="1e-11">10⁻¹¹ mol/L</option>
+            <option value="1e-13">10⁻¹³ mol/L</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="calc-result-box">
+        <h3 style="color:var(--accent-light); margin-bottom:10px;">📉 النتيجة التحليلية (حسب العلاقة pH = -log[H3O+]):</h3>
+        <p id="chem-calc-output" style="font-weight:700; font-size:1.15rem; color: white;"></p>
+        <p id="chem-nature-output" style="font-weight:800; font-size:1.3rem; margin-top:10px;"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- قسم الاختبارات -->
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة - بكالوريا كيمياء 2026</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبر دقة حفظك وفهمك بأسئلة مؤتمتة تحاكي النمط الوزاري المحدث:</p>
+    <div id="chemistry-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// فتح وإغلاق الوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// كشف الإجابات النموذجية
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  const isVisible = box.classList.contains('visible');
+  
+  if(boxId === 'rev-u1-1') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الجواب ▲' : '📝 سؤال امتحاني: ماذا يحدث لنواة عندما تطلق بوزيترون؟ ▼';
+  } else if(boxId === 'rev-u4-1') {
+    btn.innerHTML = isVisible ? '❌ إخفاء التعليل ▲' : '⚗️ تعليل امتحاني: لماذا درجة غليان الحموض الكربوكسيلية أعلى من الأغوال المقابلة؟ ▼';
+  }
+}
+
+// محاكي الكيمياء (حساب pH)
+function calculatePH() {
+  const conc = parseFloat(document.getElementById('h3oConc').value);
+  const pH = -Math.log10(conc);
+  
+  document.getElementById('chem-calc-output').innerHTML = 
+    `قيمة الـ pH تساوي: <span style="color:var(--accent-light); font-size:1.5rem;">${pH}</span>`;
+    
+  let nature = "";
+  let color = "";
+  
+  if (pH < 7) {
+    nature = "المحلول: حمضي 🔴";
+    color = "#ef4444";
+  } else if (pH === 7) {
+    nature = "المحلول: معتدل ⚪";
+    color = "#ffffff";
+  } else {
+    nature = "المحلول: أساسي (قلوي) 🔵";
+    color = "#3b82f6";
+  }
+  
+  const natureOutput = document.getElementById('chem-nature-output');
+  natureOutput.innerText = nature;
+  natureOutput.style.color = color;
+}
+
+// قاعدة بيانات الأسئلة المؤتمتة (كيمياء)
+const chemistryQuizData = [
+  { q: "في التفاعلات النووية، الدقيقة التي لا تحمل شحنة وكتلتها معدومة تقريباً هي:", opts: ["جسيم ألفا", "جسيم بيتا", "البوزيترون", "فوتون غاما"], ans: 3 },
+  { q: "حسب قاعدة لوشاتولييه، زيادة الضغط على تفاعل غازي متوازن يؤدي إلى انزياح التوازن نحو:", opts: ["الطرف الماص للحرارة", "الطرف ذو عدد المولات الغازية الأقل", "الطرف ذو عدد المولات الغازية الأكبر", "لا يتأثر التوازن"], ans: 1 },
+  { q: "وفق نظرية برونشتد-لوري، الحمض المرافق للأساس (NH3) هو:", opts: ["NH4+", "NH2-", "H3O+", "OH-"], ans: 0 },
+  { q: "عند معايرة حمض ضعيف بأساس قوي، تكون المشعرات المناسبة هي التي يتراوح مدى تلونها في المجال:", opts: ["الحمضي (pH < 7)", "المعتدل (pH = 7)", "الأساسي (pH > 7)", "لا يمكن استخدام مشعر"], ans: 2 },
+  { q: "المركب العضوي الناتج عن تفاعل حمض الإيتانويك مع الإيتانول في وسط حمضي هو:", opts: ["إيتانوات الإيتيل", "ميتانوات الإيتيل", "بروبانال", "بروبانون"], ans: 0 }
+];
+
+function buildChemistryQuiz() {
+  const container = document.getElementById('chemistry-quiz-box');
+  container.innerHTML = '';
+  chemistryQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">السؤال ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkChemistryAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkChemistryAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === chemistryQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[chemistryQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل المبدئي
+window.onload = function() {
+  buildChemistryQuiz();
+  calculatePH();
+};
+</script>
+</body>
+</html>
