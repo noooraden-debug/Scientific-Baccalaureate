@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚛️ الموسوعة التفاعلية في الفيزياء - بكالوريا علمي | المنهاج السوري 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #4f46e5;
+    --primary-light: #6366f1;
+    --primary-pale: #eef2ff;
+    --accent: #0ea5e9;
+    --accent-light: #38bdf8;
+    --accent-pale: #f0f9ff;
+    --red: #e11d48;
+    --dark: #0f172a;
+    --text: #334155;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 50%, #4f46e5 100%);
+    color: white;
+    padding: 50px 20px 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(56,189,248,0.1) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 900;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    margin-top: 12px;
+    color: var(--accent-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.88rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.75); padding: 16px 20px; cursor: pointer;
+    font-size: 0.9rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--accent-light); border-bottom-color: var(--accent-light); background: rgba(255,255,255,0.03);
+  }
+  .back-link {
+    margin-right: auto; color: var(--accent-light); text-decoration: none; font-size: 0.85rem; font-weight: 700; padding: 16px 10px; transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 15px; }
+  .section { display: none; animation: slideIn 0.35s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.03); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 5px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.85rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: white; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+  }
+  .unit-info h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+  .unit-meta { font-size: 0.85rem; color: #64748b; font-weight: 600; display: flex; gap: 10px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 25px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 22px; margin-bottom: 20px;
+    border-right: 4px solid var(--primary-light);
+  }
+  .lesson-block h3 { font-size: 1.15rem; font-weight: 800; color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+  .lesson-block p { margin-bottom: 10px; font-weight: 500; color: #475569; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 10px 0; font-weight: 600; }
+  .lesson-block li { margin-bottom: 8px; }
+
+  .key-term {
+    display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white; border-radius: 6px; padding: 2px 10px; font-size: 0.85rem; font-weight: 700; margin: 2px 4px;
+    direction: ltr; /* لضمان ظهور الرموز الفيزيائية بشكل صحيح */
+  }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 14px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 12px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; }
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: white; border: none; border-radius: 8px; padding: 10px 22px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 15px 20px; margin: 10px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 600;
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; border-radius: 14px; padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: flex-end; }
+  .sim-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
+  .sim-field label { font-size: 0.88rem; color: var(--accent-light); font-weight: bold; }
+  .sim-field select, .sim-field input { padding: 12px; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.1); color: white; font-family: 'Cairo', sans-serif; font-weight: bold; text-align: center;}
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; margin-top: 20px; border-right: 4px solid var(--accent-light);
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 25px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.1rem; margin-bottom: 15px; color: var(--dark); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 14px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; text-align: right; transition: all 0.2s; font-weight: 700;
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #d1fae5; border-color: #10b981; color: #065f46; }
+  .quiz-opt.wrong { background: #ffe4e6; border-color: #e11d48; color: #881337; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 20px; margin: 20px 0; display: flex; gap: 15px; }
+  .gold-tip .icon { font-size: 1.6rem; }
+  .gold-tip .text { font-size: 0.95rem; color: #78350f; font-weight: 700; }
+
+  @media(max-width: 600px) { .sim-row { flex-direction: column; align-items: stretch; } }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>⚛️ موسوعة الفيزياء التفاعلية</h1>
+  <div class="subtitle">البكالوريا العلمي | المنهاج السوري 2026 المطوّر</div>
+  <div class="badge-row">
+    <span class="badge">⚙️ الميكانيك والنواسات</span>
+    <span class="badge">⚡ الكهرباء والمغناطيسية</span>
+    <span class="badge">🌊 الأمواج والفيزياء الحديثة</span>
+    <span class="badge">🧮 محاكي القوانين الفيزيائية</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الفهرس والتأسيس</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 تفصيل الوحدات والدروس</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🧮 محاكي القوانين الذكي</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الاختبارات المؤتمتة</button>
+  <a href="index.html" class="back-link">↩️ اللوحة الرئيسية</a>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 12px; text-align: center;">🎯 الركيزة التأسيسية لورقة امتحان الفيزياء (400 درجة)</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569;">تتألف ورقة الامتحان لعام 2026 من قسمين رئيسيين: أسئلة نظرية (اختيار من متعدد، تعاليل، استنتاج قوانين) وقسم المسائل التطبيقية (4 مسائل متدرجة الصعوبة).</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>الوحدة الدراسية</th>
+            <th>التركيز الامتحاني الاستراتيجي</th>
+            <th>نوع المسائل المتوقعة بقوة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1. الميكانيك (النواسات) ⚙️</td><td>استنتاج تابع المطال، حساب الدور والسرعة</td><td>مسألة نواس مرن أو ثقلي (أساسية بـ 80 درجة)</td></tr>
+          <tr><td>2. الكهرباء والمغناطيسية ⚡</td><td>قوانين لابلاس، فرداي، وقوانين الشدة الفعالة</td><td>مسألة تيار متناوب جيبي مع رسمة (فرينل)</td></tr>
+          <tr><td>3. الأمواج المستقرة 🌊</td><td>تجارب ملد، المزامير ذات الفم المفتوح والمغلق</td><td>حساب أطوال الأمواج ومواضع العقد والبطون</td></tr>
+          <tr><td>4. الفيزياء الحديثة ☢️</td><td>تأين الذرات، طاقة الفوتون، التفاعلات النووية</td><td>مسألة نصف العمر والتفاعلات النووية، أو الفعل الكهرضوئي</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>القاعدة الذهبية في الفيزياء:</strong> لا تحفظ القوانين كأحرف مبهمة، بل افهم دلالة كل رمز ووحدته الدولية. تحويل الوحدات (مثل تحويل السم إلى متر أو الغرام إلى كيلوغرام) هو الفخ الأول الذي يقع فيه الطلاب في المسائل!
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: الميكانيك (Mechanics)</h2>
+        <div class="unit-meta"><span>⚙️ الحركة التوافقية البسيطة</span><span>⚖️ ميكانيك السوائل</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: النواس المرن (الحركة التوافقية البسيطة)</h3>
+        <p>يتألف من نابض مرن مهمل الكتلة حلقاته متباعدة، معلق به جسم كتلته <span class="key-term">m</span>.</p>
+        <ul>
+          <li><strong>القوة المعيدة:</strong> <span class="key-term">F = -k.x</span> (قوة الإرجاع تتناسب طرداً مع المطال وتعكسه بالإشارة).</li>
+          <li><strong>الدور الخاص:</strong> <span class="key-term">T0 = 2π√(m/k)</span> (يقاس بالثانية).</li>
+          <li><strong>تابع المطال الزمني:</strong> <span class="key-term">x = Xmax . cos(ω0.t + φ)</span></li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u1-1')">📝 استنتاج امتحاني هام: هل يتعلق الدور الخاص بسعة الاهتزاز؟ ▼</button>
+        <div class="reveal-box" id="rev-u1-1">
+          <strong>الجواب النموذجي:</strong> لا، من خلال علاقة الدور الخاص للنواس المرن T0 = 2π√(m/k)، نلاحظ أن الدور يتعلق فقط بكتلة الجسم (m) وثابت صلابة النابض (k) ولا يحوي سعة الاهتزاز (Xmax)، وبالتالي الحركة التوافقية البسيطة هي حركة متساوية الزمن (ايزوكروزم).
+        </div>
+      </div>
+      
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني والثالث: نواس الفتل والنواس الثقلي</h3>
+        <ul>
+          <li><strong>نواس الفتل:</strong> سلك معدني قابل للفتل معلق به ساق معدنية متجانسة. الدور الخاص: <span class="key-term">T0 = 2π√(IΔ / K)</span>.</li>
+          <li><strong>النواس الثقلي المركب:</strong> أي جسم صلب يهتز حول محور أفقي لا يمر من مركز عطالته.</li>
+          <li><strong>النواس الثقلي البسيط:</strong> نقطة مادية معلقة بخيط لا يمتط، دوره في السعات الزاوية الصغيرة: <span class="key-term">T0 = 2π√(L/g)</span>.</li>
+        </ul>
+      </div>
+
+      <div class="lesson-block">
+        <h3>📌 الدرس الرابع: ميكانيك السوائل</h3>
+        <p>يختص بدراسة السوائل الساكنة والمتحركة، وأهم القوانين الامتحانية فيه:</p>
+        <ul>
+          <li><strong>معادلة الاستمرارية:</strong> <span class="key-term">S1.v1 = S2.v2 = Q</span> (التدفق الحجمي ثابت).</li>
+          <li><strong>معادلة برنولي:</strong> تطبيق مبدأ حفظ الطاقة على السوائل المثالية المتحركة.</li>
+          <li><strong>نظرية تورشلي:</strong> سرعة خروج سائل من فتحة خزان تساوي <span class="key-term">v = √(2gh)</span>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: الكهرباء والمغناطيسية (Electromagnetism)</h2>
+        <div class="unit-meta"><span>🧲 التحريض الكهرطيسي</span><span>⚡ التيار المتناوب الجيبي</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول والثاني: تأثير الحقل المغناطيسي والتحريض</h3>
+        <ul>
+          <li><strong>قوة لابلاس (الكهرطيسية):</strong> تنشأ عند مرور تيار كهربائي في سلك خاضع لحقل مغناطيسي. القانون: <span class="key-term">F = I.L.B.sin(θ)</span>.</li>
+          <li><strong>قانون فاراداي في التحريض:</strong> القوة المحركة الكهربائية المتحرضة تنتج عن تغير التدفق المغناطيسي <span class="key-term">ε = - dΦ/dt</span>.</li>
+          <li><strong>قانون لنز (للتحديد):</strong> جهة التيار المتحرض تعاكس السبب الذي أدى إلى حدوثه.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الدرس الرابع: التيار المتناوب الجيبي (بطل المسائل الامتحانية)</h3>
+        <p>أهم درس في الكتاب للقسم العملي، حيث يتم دمج المقاومات، الوشائع، والمكثفات في دارات متسلسلة وتفرعية.</p>
+        <table class="summary-table">
+          <tr><th>العنصر الكهربائي</th><th>الممانعة (X)</th><th>تأثيره على الطور (φ)</th></tr>
+          <tr><td>المقاومة الأومية (R)</td><td>X = R</td><td>التيار والتوتر على توافق بالطور (φ=0)</td></tr>
+          <tr><td>الوشيعة الصرفة (L)</td><td>XL = L.ω</td><td>التوتر يتقدم على التيار بمقدار (π/2)</td></tr>
+          <tr><td>المكثفة (C)</td><td>XC = 1 / (C.ω)</td><td>التوتر يتأخر عن التيار بمقدار (π/2)</td></tr>
+        </table>
+        <div class="gold-tip">
+          <div class="icon">📐</div>
+          <div class="text">
+            <strong>ملاحظة هامة:</strong> لا تنسَ رسم "إنشاء فرينل" في ورقة الامتحان، فهو يحمل جزءاً من علامة المسألة ويساعدك في إيجاد علاقة الممانعة الكلية (Z) من خلال فيثاغورث.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: الأمواج (Waves)</h2>
+        <div class="unit-meta"><span>〰️ الأمواج المستقرة العرضية والطولية</span><span>📡 الأمواج الكهرطيسية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الأمواج المستقرة العرضية (تجربة ملد)</h3>
+        <p>تنشأ من تراكب موجتين (واردة ومنعكسة) لهما نفس التواتر والسعة وتنتشران باتجاهين متعاكسين.</p>
+        <ul>
+          <li><strong>طول الوتر المتشكل:</strong> يتشكل الوتر من عدد صحيح من المغازل <span class="key-term">L = K.(λ/2)</span> حيث K هو عدد المغازل.</li>
+          <li><strong>البعد بين عقدتين متتاليتين:</strong> يساوي <span class="key-term">λ/2</span>.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الأمواج المستقرة الطولية (المزامير)</h3>
+        <p>تطبيقات الصوت في الأنابيب المهتزة:</p>
+        <ul>
+          <li><strong>المزمار مفتوح النهايتين:</strong> يحوي بطني اهتزاز عند الطرفين. تردده الأساسي <span class="key-term">f = v / 2L</span>. يصدر كل المدروجات (فردية وزوجية).</li>
+          <li><strong>المزمار مغلق النهاية:</strong> يحوي عقدة عند النهاية المغلقة وبطن عند المفتوحة. يصدر المدروجات الفردية فقط.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">4</div>
+      <div class="unit-info">
+        <h2>الوحدة الرابعة: الفيزياء الحديثة والنووية (Modern Physics)</h2>
+        <div class="unit-meta"><span>🚀 النظرية النسبية الخاصة</span><span>☢️ فيزياء النواة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 دروس الفيزياء الحديثة</h3>
+        <ul>
+          <li><strong>النظرية النسبية الخاصة (آينشتاين):</strong> الكتلة والسرعة ليستا مطلقين. علاقة تكافؤ الكتلة والطاقة الشهيرة: <span class="key-term">E = m.c²</span>. معامل لورنتز أساسي في حسابات تمدد الزمن وتقلص الأطوال.</li>
+          <li><strong>الفعل الكهرضوئي:</strong> تحرير الإلكترونات من سطح معدن عند إضاءته بضوء تواتره مناسب. طاقة الفوتون <span class="key-term">E = h.f</span> (حيث h ثابت بلانك).</li>
+          <li><strong>الفيزياء النووية:</strong> دراسة النشاط الإشعاعي (ألفا، بيتا، غاما). قانون التناقص الإشعاعي وحساب عمر النصف <span class="key-term">T½ = (ln2) / λ</span>.</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u4-1')">☢️ سؤال نظري: لماذا لا تتأثر أشعة غاما بالحقلين الكهربائي والمغناطيسي؟ ▼</button>
+        <div class="reveal-box" id="rev-u4-1">
+          <strong>الجواب:</strong> لأن أشعة غاما (γ) هي عبارة عن أمواج كهرطيسية (فوتونات) لا تحمل أي شحنة كهربائية (معتدلة الشحنة والكتلة السكونية معدومة)، وبالتالي لا تخضع لقوة لورنتز المغناطيسية أو الكهربائية.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🧮 محاكي القوانين: حساب الدور الخاص للنواس المرن</h2>
+    <p style="text-align:center; margin-bottom:20px; font-weight:600; color:#64748b;">أدخل قيم الكتلة وثابت صلابة النابض لرؤية تطبيق مباشر للقانون المعتمد في المسألة الأولى لورقة الامتحان.</p>
+
+    <div class="sim-box">
+      <div class="sim-row">
+        <div class="sim-field">
+          <label>⚖️ كتلة الجسم المعلق (m) بالكيلوغرام [kg]</label>
+          <input type="number" id="massM" value="0.4" step="0.1" min="0.1" oninput="calculatePendulum()">
+        </div>
+        <div class="sim-field">
+          <label>🔗 ثابت صلابة النابض (k) بـ [N/m]</label>
+          <input type="number" id="stiffnessK" value="40" step="1" min="1" oninput="calculatePendulum()">
+        </div>
+      </div>
+      
+      <div class="calc-result-box">
+        <h3 style="color:var(--accent-light); margin-bottom:10px;">📉 النتيجة الفيزيائية (حسب العلاقة T0 = 2π√(m/k)):</h3>
+        <p id="phys-calc-output" style="font-weight:700; font-size:1.15rem; color: white;"></p>
+        <p style="font-size:0.85rem; color:#94a3b8; margin-top:10px;">* ملاحظة: تم اعتبار القيمة التقريبية π ≈ √10 لتبسيط الحسابات الامتحانية كما هو متبع في المنهاج السوري.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة - بكالوريا فيزياء</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبر معلوماتك النظرية بأسئلة مؤتمتة تحاكي النمط الوزاري الجديد:</p>
+    <div id="physics-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// فتح وإغلاق الوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// كشف الإجابات النموذجية
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  const isVisible = box.classList.contains('visible');
+  
+  if(boxId === 'rev-u1-1') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الاستنتاج ▲' : '📝 استنتاج امتحاني هام: هل يتعلق الدور الخاص بسعة الاهتزاز؟ ▼';
+  } else if(boxId === 'rev-u4-1') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الجواب ▲' : '☢️ سؤال نظري: لماذا لا تتأثر أشعة غاما بالحقلين الكهربائي والمغناطيسي؟ ▼';
+  }
+}
+
+// محاكي النواس المرن (الفيزياء)
+function calculatePendulum() {
+  const m = parseFloat(document.getElementById('massM').value) || 0;
+  const k = parseFloat(document.getElementById('stiffnessK').value) || 1;
+  
+  // T0 = 2 * pi * sqrt(m/k)
+  // نفرض بي تساوي جذر 10 للتبسيط (كما في المنهاج) أي pi^2 = 10
+  const pi = Math.PI; 
+  let T0 = 2 * pi * Math.sqrt(m / k);
+  
+  document.getElementById('phys-calc-output').innerHTML = 
+    `الدور الخاص للاهتزاز (T0) يساوي: <span style="color:var(--accent-light); font-size:1.5rem;">${T0.toFixed(2)}</span> ثانية (s)`;
+}
+
+// قاعدة بيانات الأسئلة المؤتمتة
+const physicsQuizData = [
+  { q: "في النواس المرن، عندما يمر الجسم بنقطة التوازن (x=0)، تكون السرعة:", opts: ["معدومة (v=0)", "عظمى (Vmax)", "تساوي نصف السرعة العظمى", "تساوي المطال الأعظمي"], ans: 1 },
+  { q: "الوحدة الدولية لقياس التدفق المغناطيسي (Φ) هي:", opts: ["التسلا (Tesla)", "الويبر (Weber)", "الفاراد (Farad)", "الهنري (Henry)"], ans: 1 },
+  { q: "في دارة تيار متناوب تحوي وشيعة صرفة (مقاومتها الأومية مهملة)، فإن التوتر المطبق:", opts: ["على توافق بالطور مع التيار", "يتأخر عن التيار بمقدار (π/2)", "يتقدم على التيار بمقدار (π/2)", "يعاكس التيار بالطور (π)"], ans: 2 },
+  { q: "عند إصدار الصوت في مزمار مفتوح النهايتين، تتشكل عند الطرفين المفتوحين:", opts: ["عقدتا اهتزاز", "بطنا اهتزاز", "عقدة وبطن", "لا يتشكل شيء"], ans: 1 },
+  { q: "حسب قانون تكافؤ الكتلة والطاقة لآينشتاين، يمكن حساب الطاقة الناتجة عن النقص في الكتلة من العلاقة:", opts: ["E = m.v²", "E = m.g.h", "E = m.c²", "E = 1/2 m.v²"], ans: 2 }
+];
+
+function buildPhysicsQuiz() {
+  const container = document.getElementById('physics-quiz-box');
+  container.innerHTML = '';
+  physicsQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">السؤال ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkPhysicsAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkPhysicsAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === physicsQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[physicsQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل المبدئي
+window.onload = function() {
+  buildPhysicsQuiz();
+  calculatePendulum();
+};
+</script>
+</body>
+</html>
