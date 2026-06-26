@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧬 الموسوعة التفاعلية في علم الأحياء - سلسلة الذكي | بكالوريا علمي 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0284c7; /* Cerulean Blue */
+    --primary-light: #38bdf8;
+    --primary-pale: #f0f9ff;
+    --accent: #10b981; /* Emerald Green */
+    --accent-light: #34d399;
+    --accent-pale: #ecfdf5;
+    --red: #ef4444;
+    --dark: #0f172a;
+    --text: #334155;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #0f172a 0%, #0284c7 50%, #0369a1 100%);
+    color: white;
+    padding: 50px 20px 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(56,189,248,0.15) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 900;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    margin-top: 12px;
+    color: var(--primary-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.88rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.75); padding: 16px 20px; cursor: pointer;
+    font-size: 0.95rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--primary-light); border-bottom-color: var(--primary-light); background: rgba(255,255,255,0.03);
+  }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 15px; }
+  .section { display: none; animation: slideIn 0.35s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.03); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 5px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.85rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: white; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+  }
+  .unit-info h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; color: #0284c7; }
+  .unit-meta { font-size: 0.85rem; color: #64748b; font-weight: 600; display: flex; gap: 10px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 25px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 22px; margin-bottom: 20px;
+    border-right: 4px solid var(--accent-light);
+  }
+  .lesson-block h3 { font-size: 1.15rem; font-weight: 800; color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+  .lesson-block p { margin-bottom: 10px; font-weight: 600; color: #475569; }
+  .lesson-block ul { padding-right: 25px; margin: 10px 0; font-weight: 600; }
+  .lesson-block li { margin-bottom: 12px; }
+
+  .highlight-word {
+    color: var(--primary); font-weight: 800; background: var(--primary-pale); padding: 0 4px; border-radius: 4px;
+  }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 14px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 12px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; border-right: 1px solid #f1f5f9;}
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: white; border: none; border-radius: 8px; padding: 10px 22px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 800; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 15px 20px; margin: 10px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 700; color: #064e3b;
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; border-radius: 14px; padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: flex-end; justify-content: center;}
+  .sim-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 200px; max-width: 300px;}
+  .sim-field label { font-size: 0.9rem; color: var(--primary-light); font-weight: bold; text-align: center;}
+  .sim-field select { padding: 12px; border-radius: 8px; border: 2px solid var(--primary-light); font-size: 1rem; background: rgba(255,255,255,0.1); color: white; font-family: 'Cairo', sans-serif; font-weight: bold; text-align: center; outline: none; cursor: pointer;}
+  .sim-field select option { background: var(--dark); color: white; }
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.08); padding: 25px; border-radius: 12px; margin-top: 25px; border-right: 5px solid var(--accent-light); text-align: center;
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 25px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.1rem; margin-bottom: 15px; color: var(--dark); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 14px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; text-align: right; transition: all 0.2s; font-weight: 700; color: var(--text);
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+  .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 20px; margin: 20px 0; display: flex; gap: 15px; }
+  .gold-tip .icon { font-size: 1.8rem; }
+  .gold-tip .text { font-size: 0.95rem; color: #78350f; font-weight: 700; }
+
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🧬 الموسوعة التفاعلية في علم الأحياء</h1>
+  <div class="subtitle">سلسلة الذكي | البكالوريا العلمي السوري 2026 المطوّر</div>
+  <div class="badge-row">
+    <span class="badge">🧠 التنسيق العصبي</span>
+    <span class="badge">👁️ المستقبلات الحسية</span>
+    <span class="badge">🌱 التكاثر والنمو</span>
+    <span class="badge">🔬 الوراثة البشرية</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 خريطة المادة (300 درجة)</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 تفصيل الوحدات والدروس</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🧬 محاكي الوراثة الذكي</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الاختبارات المؤتمتة</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 12px; text-align: center;">🎯 الخريطة الذهنية لورقة امتحان علم الأحياء (300 درجة)</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569;">تعتمد مادة علم الأحياء في النظام الحديث على الفهم الدقيق للوظائف والمواقع، الربط المكتسب من الرسوم، والقدرة على حل المسائل الوراثية بدقة متناهية.</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>القسم</th>
+            <th>الوحدات المتضمنة</th>
+            <th>النمط الامتحاني المستهدف</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>القسم الأول: التنسيق والإحساس</td><td>الجهاز العصبي، المستقبلات، الغدد الصم</td><td>تحديد بدقة موقع ووظيفة، إعطاء تفسير علمي، ماذا ينتج عن، مقارنات.</td></tr>
+          <tr><td>القسم الثاني: التكاثر والنمو</td><td>التكاثر عند الأحياء، التكاثر عند الإنسان</td><td>ترتيب مراحل (كالانقسام المنصف، تشكل النطاف)، تسمية المسميات على الرسم.</td></tr>
+          <tr><td>القسم الثالث: الوراثة</td><td>الوراثة المندلية واللامندلية، الطفرات</td><td>مسألة وراثية إجبارية (هجونة ثنائية أو وراثة مرتبطة بالجنس)، تعليل طفرات.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>القاعدة الذهبية في علم الأحياء:</strong> لا تعتمد على البصم الأعمى! ارسم المخططات بيدك. في أسئلة "حدد موقع"، اذكر الموقع بأقصى دقة (مثال: اللطخة الصفراء تقع في <span class="highlight-word">المركز البصري للشبكية</span> وليس فقط في الشبكية). في المسائل الوراثية، توزع العلامات على النمط الظاهري، النمط الوراثي، واحتمال الأعراس.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: التنسيق العصبي والهرموني</h2>
+        <div class="unit-meta"><span>🧠 الدماغ والنخاع الشوكي</span><span>⚡ كمون العمل</span><span>🩸 الغدد الصم</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: النسيج العصبي (خلايا الدبق والعصبونات)</h3>
+        <p>النسيج العصبي هو حجر الأساس، يتكون من العصبونات (الخلايا الناقلة) وخلايا الدبق العصبي (الخلايا الداعمة).</p>
+        <table class="summary-table">
+          <tr><th>نوع خلية الدبق</th><th>المنشأ الجنيني</th><th>الموقع والوظيفة الأساسية</th></tr>
+          <tr><td>خلايا شوان</td><td>العرف العصبي</td><td>تغمد الألياف العصبية في <span class="highlight-word">المحيط</span> بغمد النخاعين</td></tr>
+          <tr><td>الخلايا الدبقية قليلة الاستطالات</td><td>الأنبوب العصبي</td><td>تشكيل غمد النخاعين في <span class="highlight-word">المركز</span> (الدماغ والنخاع)</td></tr>
+          <tr><td>الخلايا الدبقية الصغيرة</td><td>الوريقة الجنينية المتوسطة</td><td>البلعمة والدفاع المناعي عن النسيج العصبي</td></tr>
+        </table>
+      </div>
+      
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: فيزيولوجيا العصب (السيالة العصبية)</h3>
+        <ul>
+          <li><strong>كمون الراحة (-70mV):</strong> يكون الغشاء مستقطباً (الخارج موجب والداخل سالب) بسبب <span class="highlight-word">مضخة صوديوم-بوتاسيوم</span> وقنوات التسرب.</li>
+          <li><strong>زوال الاستقطاب:</strong> يفتح قنوات <span class="highlight-word">الصوديوم Na+</span> المبوبة بالفولتاج، فيدخل الصوديوم ويصبح الداخل موجباً (+30mV).</li>
+          <li><strong>عودة الاستقطاب:</strong> تغلق قنوات الصوديوم وتفتح قنوات <span class="highlight-word">البوتاسيوم K+</span> فيخرج البوتاسيوم ليستعيد الغشاء سلبيته.</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u1-1')">🧠 سؤال امتحاني: ماذا ينتج عن إعطاء مادة توقف عمل مضخة صوديوم-بوتاسيوم؟ ▼</button>
+        <div class="reveal-box" id="rev-u1-1">
+          <strong>الجواب النموذجي:</strong> يؤدي ذلك إلى زوال استقطاب الغشاء تدريجياً، وفقدان الخلية العصبية لكمون الراحة، وبالتالي عدم قدرتها على توليد سيالة عصبية (كمون عمل) عند تنبيهها.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: المستقبلات الحسية</h2>
+        <div class="unit-meta"><span>👁️ العين</span><span>👂 الأذن</span><span>👃 الشم والتذوق</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 العين والرؤية</h3>
+        <p>تتألف كرة العين من ثلاث طبقات: الصلبة (حماية)، المشيمية (تغذية)، والشبكية (الاستقبال الضوئي).</p>
+        <ul>
+          <li><strong>العصي (Rods):</strong> مسؤولة عن الرؤية الليلية (الظلام) وتتوزع في محيط الشبكية. صباغها: <span class="highlight-word">الرودوبسين</span>.</li>
+          <li><strong>المخاريط (Cones):</strong> مسؤولة عن الرؤية النهارية وإدراك الألوان، تتركز في الحفيرة المركزية. صباغها: <span class="highlight-word">اليودوبسين</span>.</li>
+          <li><strong>المطابقة:</strong> قدرة العين على الرؤية الواضحة للأجسام القريبة بتعديل تحدب <span class="highlight-word">الجسم البلوري</span> بفعل العضلة الهدبية.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: الوراثة (Genetics)</h2>
+        <div class="unit-meta"><span>🧬 قوانين مندل</span><span>🩸 الزمر الدموية</span><span>🔗 الوراثة والجنس</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الوراثة اللامندلية (تعديلات النسب المندلية)</h3>
+        <p>لا تخضع جميع الصفات للسيادة التامة، حيث تتغير نسبة (3:1) في الهجونة الأحادية إلى نسب أخرى:</p>
+        <ul>
+          <li><strong>الرجحان غير التام (1:2:1):</strong> كوراثة لون أزهار فم السمكة. الأليلان لا يسود أحدهما على الآخر، بل يظهر نمط ظاهري وسيط (وردي) لدى المتخالف.</li>
+          <li><strong>الرجحان المشترك أو التعادل (1:2:1):</strong> كوراثة الزمرة الدموية AB، كلا الأليلين IA و IB يعبران عن نفسيهما معاً.</li>
+          <li><strong>المورثات المميتة (2:1):</strong> مورثات تسبب موت الفرد في الحالة المتماثلة (الراجحة أو المتنحية)، مثل مورثة اللون الأصفر في الفئران (Y).</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u4-1')">📝 مسألة هامة: كيف نكتب النمط الوراثي لشخص زمرته O؟ ▼</button>
+        <div class="reveal-box" id="rev-u4-1">
+          <strong>الجواب:</strong> الزمرة O هي زمرة متنحية، ولا تظهر إلا إذا كان النمط الوراثي متماثل اللواقح متنحي: <span class="highlight-word">io io</span>. بينما الزمرة A قد تكون متماثلة (IA IA) أو متخالفة (IA io).
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🧬 محاكي الوراثة الذكي: توارث فصائل الدم (الرجحان المشترك والتام)</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#64748b;">اختر النمط الوراثي للأب والنمط الوراثي للأم لتكتشف الأنماط الظاهرية (الزمر الدموية) المحتملة للأبناء ونسبها المئوية، وهو تطبيق مباشر لدرس الأليلات المتعددة.</p>
+
+    <div class="sim-box">
+      <div class="sim-row">
+        <div class="sim-field">
+          <label>👨 الأب (النمط الوراثي)</label>
+          <select id="fatherGenotype" onchange="calculateBloodType()">
+            <option value="IA_IA">IA IA (زمرة A صافية)</option>
+            <option value="IA_i" selected>IA i (زمرة A هجينة)</option>
+            <option value="IB_IB">IB IB (زمرة B صافية)</option>
+            <option value="IB_i">IB i (زمرة B هجينة)</option>
+            <option value="IA_IB">IA IB (زمرة AB)</option>
+            <option value="i_i">i i (زمرة O)</option>
+          </select>
+        </div>
+        <div class="sim-field">
+          <label>👩 الأم (النمط الوراثي)</label>
+          <select id="motherGenotype" onchange="calculateBloodType()">
+            <option value="IA_IA">IA IA (زمرة A صافية)</option>
+            <option value="IA_i">IA i (زمرة A هجينة)</option>
+            <option value="IB_IB">IB IB (زمرة B صافية)</option>
+            <option value="IB_i" selected>IB i (زمرة B هجينة)</option>
+            <option value="IA_IB">IA IB (زمرة AB)</option>
+            <option value="i_i">i i (زمرة O)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="calc-result-box">
+        <h3 style="color:var(--primary-light); margin-bottom:15px; font-size:1.3rem;">📊 الأبناء المحتملون (الجيل الأول F1):</h3>
+        <div id="punnett-results" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة - بكالوريا علم الأحياء 2026</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبر دقة حفظك وفهمك بأسئلة مؤتمتة تحاكي النمط الوزاري المحدث (اختر الإجابة الصحيحة):</p>
+    <div id="biology-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// فتح وإغلاق الوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// كشف الإجابات النموذجية
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  const isVisible = box.classList.contains('visible');
+  
+  if(boxId === 'rev-u1-1') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الجواب ▲' : '🧠 سؤال امتحاني: ماذا ينتج عن إعطاء مادة توقف عمل مضخة صوديوم-بوتاسيوم؟ ▼';
+  } else if(boxId === 'rev-u4-1') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الحل ▲' : '📝 مسألة هامة: كيف نكتب النمط الوراثي لشخص زمرته O؟ ▼';
+  }
+}
+
+// محاكي الوراثة (مربع بانيت لفصائل الدم)
+function calculateBloodType() {
+  const f = document.getElementById('fatherGenotype').value.split('_');
+  const m = document.getElementById('motherGenotype').value.split('_');
+  
+  // Create Punnett square outcomes
+  const outcomes = [
+    [f[0], m[0]], [f[0], m[1]],
+    [f[1], m[0]], [f[1], m[1]]
+  ];
+  
+  let typeCounts = { 'A': 0, 'B': 0, 'AB': 0, 'O': 0 };
+  
+  outcomes.forEach(pair => {
+    // Sort so IA always comes before IB or i, etc.
+    let sorted = pair.sort();
+    if(sorted.includes('IA') && sorted.includes('IB')) typeCounts['AB']++;
+    else if(sorted.includes('IA') && !sorted.includes('IB')) typeCounts['A']++;
+    else if(sorted.includes('IB') && !sorted.includes('IA')) typeCounts['B']++;
+    else if(sorted[0] === 'i' && sorted[1] === 'i') typeCounts['O']++;
+  });
+
+  const resultsDiv = document.getElementById('punnett-results');
+  resultsDiv.innerHTML = '';
+  
+  const colors = { 'A': '#ef4444', 'B': '#3b82f6', 'AB': '#a855f7', 'O': '#10b981' };
+  
+  for (const [type, count] of Object.entries(typeCounts)) {
+    if (count > 0) {
+      let percentage = (count / 4) * 100;
+      resultsDiv.innerHTML += `
+        <div style="background:${colors[type]}20; border:2px solid ${colors[type]}; border-radius:12px; padding:15px 25px; min-width:120px;">
+          <div style="font-size:2rem; font-weight:900; color:${colors[type]};">${type}</div>
+          <div style="font-size:1.1rem; font-weight:700; color:white;">${percentage}%</div>
+        </div>
+      `;
+    }
+  }
+}
+
+// قاعدة بيانات الأسئلة المؤتمتة (علم الأحياء)
+const biologyQuizData = [
+  { q: "ما هو المنشأ الجنيني لخلايا الدبق الصغيرة؟", opts: ["الأنبوب العصبي", "العرف العصبي", "الوريقة الجنينية المتوسطة", "الوريقة الجنينية الخارجية"], ans: 2 },
+  { q: "الطور الذي تفتح فيه قنوات الصوديوم المبوبة بالفولتاج في كمون العمل هو:", opts: ["كمون الراحة", "عودة الاستقطاب", "زوال الاستقطاب", "فرط الاستقطاب"], ans: 2 },
+  { q: "يوجد صباغ الرودوبسين في:", opts: ["المخاريط", "العصي", "الخلايا العقدية", "الخلايا الأفقية"], ans: 1 },
+  { q: "في وراثة زهرة فم السمكة (رجحان غير تام)، عند تهجين سلالتين صافيتين (حمراء وبيضاء)، تكون نسبة الجيل الثاني:", opts: ["3:1", "9:3:3:1", "1:2:1", "2:1"], ans: 2 },
+  { q: "الجزء المسؤول عن المطابقة في العين لرؤية الأجسام القريبة هو:", opts: ["القرنية الشفافة", "الشبكية", "القزحية", "الجسم البلوري"], ans: 3 }
+];
+
+function buildBiologyQuiz() {
+  const container = document.getElementById('biology-quiz-box');
+  container.innerHTML = '';
+  biologyQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">السؤال ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkBiologyAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkBiologyAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === biologyQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[biologyQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل المبدئي
+window.onload = function() {
+  buildBiologyQuiz();
+  calculateBloodType();
+};
+</script>
+</body>
+</html>
