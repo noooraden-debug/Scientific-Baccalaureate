@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇸🇾 الموسوعة التفاعلية في التربية الإسلامية - سلسلة الذكي | بكالوريا علمي 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #065f46; /* Deep Islamic Green */
+    --primary-light: #10b981;
+    --primary-pale: #ecfdf5;
+    --accent: #d97706; /* Gold / Amber */
+    --accent-light: #f59e0b;
+    --accent-pale: #fffbeb;
+    --dark: #022c22;
+    --text: #1e293b;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.9;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #022c22 0%, #065f46 50%, #10b981 100%);
+    color: white;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(6, 95, 70, 0.3);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245,158,11,0.15) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    font-family: 'Amiri', serif;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-top: 15px;
+    color: var(--accent-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(245,158,11,0.4);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.9rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.8); padding: 16px 20px; cursor: pointer;
+    font-size: 0.95rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--accent-light); border-bottom-color: var(--accent-light); background: rgba(255,255,255,0.05);
+  }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 35px 15px; }
+  .section { display: none; animation: slideIn 0.4s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.04); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 6px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.9rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900; color: white; flex-shrink: 0; font-family: 'Amiri', serif;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(6, 95, 70, 0.3);
+  }
+  .unit-info h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 4px; color: var(--dark); }
+  .unit-meta { font-size: 0.88rem; color: #64748b; font-weight: 600; display: flex; gap: 12px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 30px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 25px; margin-bottom: 25px;
+    border-right: 4px solid var(--accent);
+  }
+  .lesson-block h3 { font-size: 1.2rem; font-weight: 800; color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;}
+  .lesson-block p { margin-bottom: 15px; font-weight: 600; color: #334155; text-align: justify; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 15px 0; font-weight: 600; color: #1e293b; }
+  .lesson-block li { margin-bottom: 12px; }
+
+  .highlight { color: var(--primary-light); font-weight: 800; }
+  .term-box { background: #fef2f2; border: 1px solid #fca5a5; padding: 15px; border-radius: 8px; margin: 10px 0; color: #991b1b; font-weight: bold;}
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 15px; font-weight: 800; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); }
+  .summary-table td { padding: 15px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; border-right: 1px solid #f1f5f9;}
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), #d97706);
+    color: white; border: none; border-radius: 8px; padding: 12px 25px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 800; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 20px; margin: 15px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 700; color: var(--dark); border-right: 6px solid var(--accent);
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #022c22, #065f46); color: white; border-radius: 14px; padding: 30px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-field { margin-bottom: 20px; }
+  .sim-field label { display: block; font-size: 1rem; color: var(--accent-light); font-weight: bold; margin-bottom: 10px; }
+  .sim-field select { width: 100%; padding: 14px; border-radius: 8px; border: 2px solid var(--accent); font-size: 1.1rem; background: rgba(255,255,255,0.05); color: white; font-family: 'Amiri', serif; font-weight: bold; cursor: pointer; outline: none; }
+  .sim-field select option { background: var(--dark); color: white; }
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin-top: 25px; border-right: 5px solid var(--accent-light);
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 30px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.15rem; margin-bottom: 20px; color: var(--dark); font-family: 'Amiri', serif;}
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 1rem; text-align: right; transition: all 0.2s; font-weight: 700; color: var(--text);
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+  .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 25px; margin: 20px 0; display: flex; gap: 18px; align-items: flex-start;}
+  .gold-tip .icon { font-size: 2.2rem; line-height: 1;}
+  .gold-tip .text { font-size: 1rem; color: #78350f; font-weight: 800; line-height: 1.8;}
+
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🇸🇾 الموسوعة التفاعلية في التربية الإسلامية</h1>
+  <div class="subtitle">سلسلة الذكي | البكالوريا العلمي السوري 2026 (محدث وشامل لكامل الوحدات الست)</div>
+  <div class="badge-row">
+    <span class="badge">📖 القرآن والعقيدة</span>
+    <span class="badge">🕋 العبادات (الحج)</span>
+    <span class="badge">⚖️ مصادر التشريع</span>
+    <span class="badge">🏛️ الحضارة والمعاملات</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 خريطة التفوق الامتحاني</button>
+  <button class="nav-btn" onclick="showSection('unit123')">📖 الوحدات 1، 2 و 3</button>
+  <button class="nav-btn" onclick="showSection('unit456')">⚖️ الوحدات 4، 5 و 6</button>
+  <button class="nav-btn" onclick="showSection('memorization')">📜 قسم الاستحفاظ</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🎭 محاكي المصطلحات الشرعية</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الأتمتة الشامل</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 15px; text-align: center;">🎯 استراتيجية السيطرة على ورقة التربية الإسلامية</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569; margin-bottom: 20px;">التربية الإسلامية في المنهاج السوري ليست مجرد نصوص للحفظ، بل تعتمد على الاستنتاج، ربط الأحكام الشرعية بالأدلة (القرآن والسنة)، وفهم المصطلحات. إليك التوزيع الذهني للورقة:</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>القسم الامتحاني</th>
+            <th>الوصف وآلية الحل</th>
+            <th>التركيز المطلوب</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>قسم الاستحفاظ (القرآن والحديث)</td><td>كتابة الآيات القرآنية بدقة، وتسميع الحديث مع راويه.</td><td>التشكيل الدقيق للآيات (خاصة أواخر الكلمات)، وحفظ اسم الراوي وتاريخه.</td></tr>
+          <tr><td>الأحكام الشرعية والتشريع</td><td>أسئلة حول العبادات (أركان، واجبات، سنن الحج) ومصادر التشريع.</td><td>القدرة على التمييز الدقيق (مثال: الفرق بين المصالح المرسلة وسد الذرائع).</td></tr>
+          <tr><td>الفهم والاستنتاج والأتمتة</td><td>استخراج العبر من الآيات، التعليل، وتحديد الفكر الرئيسة.</td><td>قراءة قسم (أتعلم من الدرس) في نهاية كل درس، وفهم معاني المفردات.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>القاعدة الذهبية في التربية الإسلامية:</strong> عند طلب "دليل شرعي"، يمكنك كتابة آية قرآنية أو حديث نبوي. لا تحفظ الشرح الحرفي للنصوص، بل افهم "وجه الدلالة". المصحح يبحث عن ربط الفكرة بالآية بشكل منطقي سليم.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: UNITS 1, 2, 3 -->
+<div id="unit123" class="section">
+  
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: القرآن الكريم والتلاوة</h2>
+        <div class="unit-meta"><span>📖 العلم والإيمان</span><span>✨ عظيم قدرة الله</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: العلم والإيمان (سورة النور)</h3>
+        <p>يركز هذا الدرس على التفكر في الكون، وضرب الأمثال في القرآن الكريم لتقريب المعاني العقلية.</p>
+        <ul>
+          <li><strong>مثل النور (اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ):</strong> يضرب الله مثلاً لنور الإيمان في قلب المؤمن كالمصباح المتلألئ.
+            <ol>
+              <li><span class="highlight">المشكاة:</span> الكوة (الفتحة) في الجدار، وتقابل صدر المؤمن المليء بالنور.</li>
+              <li><span class="highlight">المصباح:</span> مصدر النور، ويقابل الإيمان الذي أودعه الله في القلب.</li>
+              <li><span class="highlight">الزجاجة الصافية:</span> تقابل قلب المؤمن الصافي الذي لا تشوبه شائبة كفر أو نفاق.</li>
+            </ol>
+          </li>
+          <li><strong>الغاية من ضرب الأمثال:</strong> تقريب المعاني المعقولة إلى الأذهان في صور محسوسة لتسهيل الفهم والاتعاظ.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: القرآن الكريم وعظيم قدرة الله</h3>
+        <p>دعوة صريحة للتفكر في خلق السماوات والأرض (الإنزال من السماء، اختلاف ألوان الجبال والناس).</p>
+        <ul>
+          <li><strong>(إِنَّمَا يَخْشَى اللَّهَ مِنْ عِبَادِهِ الْعُلَمَاءُ):</strong> تعليل امتحاني هام: لماذا العلماء أكثر خشية؟ لأنهم أدركوا عظيم قدرة الله من خلال تفكرهم وبحثهم في دقة صنع الكون، فازدادوا إيماناً وتواضعاً.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: العقيدة الإسلامية</h2>
+        <div class="unit-meta"><span>⚖️ القضاء والقدر</span><span>📜 توجيه نبوي حكيم</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: الإيمان بالقضاء والقدر</h3>
+        <p>عقيدة المسلم ترتكز على فهم سليم للقضاء والقدر يمنعه من التواكل الكسول.</p>
+        <ul>
+          <li><strong>الفرق بينهما (هام جداً):</strong>
+            <br>- <span class="highlight">القدر:</span> علم الله تعالى الأزلي بما سيكون عليه الكون والخلق.
+            <br>- <span class="highlight">القضاء:</span> وقوع الأشياء وتنفيذها في الواقع طبقاً لعلم الله (القدر).
+          </li>
+          <li><strong>آثار الإيمان بالقضاء والقدر:</strong>
+            <br>1. يبعث في النفس السكينة والطمأنينة (لأنك تعلم أن ما أصابك لم يكن ليخطئك).
+            <br>2. يدفع الإنسان للعمل والإنتاج بعيداً عن التواكل (اعقلها وتوكل).
+            <br>3. التحرر من الخوف من الناس والمخلوقات.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: العبادات (الحج والعمرة)</h2>
+        <div class="unit-meta"><span>🕋 أركان الحج</span><span>🚶 واجبات وسنن</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 درس الحج والعمرة (الدرس الذهبي في الامتحان)</h3>
+        <p>يجب التمييز بدقة بين الركن والواجب والسنة، فالسؤال المؤتمت غالباً ما يكون (من أركان الحج...؟).</p>
+        <table class="summary-table">
+          <tr><th>الحكم الشرعي</th><th>الوصف والنتيجة في حال الترك</th><th>أمثلته في الحج</th></tr>
+          <tr><td><strong>الركن</strong></td><td>الأساس الذي <span class="term-box">لا يصح الحج إطلاقاً بدونه</span>.</td><td>1. الإحرام 2. الوقوف بعرفة (أعظم ركن) 3. طواف الإفاضة 4. السعي.</td></tr>
+          <tr><td><strong>الواجب</strong></td><td>يصح الحج بدونه، ولكن يأثم تاركه ويُجبر بـ (دم/فدية).</td><td>1. المبيت بمزدلفة 2. رمي الجمرات 3. طواف الوداع.</td></tr>
+          <tr><td><strong>السنة</strong></td><td>يُثاب فاعلها، ولا شيء على تاركها.</td><td>1. طواف القدوم 2. التلبية.</td></tr>
+        </table>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-hajj')">📝 سؤال امتحاني: ما الفرق بين الحج والعمرة؟ ▼</button>
+        <div class="reveal-box" id="rev-hajj">
+          <strong>الجواب النموذجي:</strong> العمرة هي زيارة البيت الحرام بأعمال محددة (إحرام، طواف، سعي، حلق/تقصير). 
+          <br><strong>الفرق:</strong> العمرة ليس فيها (وقوف بعرفة) ولا (رمي جمرات) ولا (مبيت بمزدلفة)، وتؤدى في أي وقت من السنة عكس الحج الذي له زمان مخصوص.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SECTION: UNITS 4, 5, 6 -->
+<div id="unit456" class="section">
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">4</div>
+      <div class="unit-info">
+        <h2>الوحدة الرابعة: مصادر التشريع الإسلامي</h2>
+        <div class="unit-meta"><span>⚖️ الاستحسان</span><span>📈 المصالح المرسلة</span><span>🛡️ سد الذرائع</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الأدلة الشرعية التبعية</h3>
+        <p>بعد القرآن والسنة والإجماع والقياس، وضع العلماء أدلة تواكب تطور العصر لاستنباط الأحكام.</p>
+        <table class="summary-table">
+          <tr><th>المصدر</th><th>تعريفه المبسط</th><th>مثال امتحاني هام</th></tr>
+          <tr><td><strong>الاستحسان</strong></td><td>العدول (الانتقال) عن حكم في مسألة إلى حكم آخر لوجه أقوى ومصلحة راجحة.</td><td>تضمين الأجير المشترك (كالخياط) في حال تلف القماش عنده للحفاظ على أموال الناس.</td></tr>
+          <tr><td><strong>المصالح المرسلة</strong></td><td>جلب منفعة أو دفع مضرة لم ينص الشارع على اعتبارها ولم ينص على إلغائها.</td><td>جمع القرآن الكريم في مصحف واحد، وتوثيق عقود الزواج في المحاكم الرسمية حالياً.</td></tr>
+          <tr><td><strong>سد الذرائع</strong></td><td>الذريعة هي الوسيلة. وسد الذرائع هو منع الوسائل (المباحة أصلاً) لأنها تؤدي إلى مفسدة مؤكدة.</td><td>منع بيع السلاح في أوقات الفتن، تحريم الخلوة بالأجنبية لأنها تؤدي للحرام.</td></tr>
+          <tr><td><strong>العرف</strong></td><td>ما اعتاده الناس وساروا عليه من قول أو فعل بشرط ألا يخالف نصاً شرعياً.</td><td>تقسيم المهر إلى معجل ومؤجل (عرف صحيح لا يخالف الشرع).</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u5">
+    <div class="unit-header" onclick="toggleUnit('u5')">
+      <div class="unit-num">5</div>
+      <div class="unit-info">
+        <h2>الوحدة الخامسة: الأخلاق والمعاملات</h2>
+        <div class="unit-meta"><span>📝 آية الدين</span><span>🤝 الوحدة الإنسانية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: صيانة الحقوق وتوثيق العقود</h3>
+        <p>يتناول هذا الدرس "آية الدَّين" وهي أطول آية في القرآن الكريم (في سورة البقرة).</p>
+        <ul>
+          <li><strong>أهمية توثيق الديون بالكتابة والإشهاد:</strong> حفظاً للحقوق من الضياع، ومنعاً للنزاع والخصومة بين الناس، وإبعاداً لنسيان المقدار أو الأجل.</li>
+          <li><strong>مواصفات الكاتب والشاهد:</strong> العدالة، الأمانة، عدم الانحياز لأحد الطرفين، وألا يضار الكاتب أو الشاهد بسبب شهادتهما.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: الوحدة الإنسانية</h3>
+        <p>الناس جميعاً سواسية كأسنان المشط، لا فضل لعربي على أعجمي إلا بالتقوى.</p>
+        <ul>
+          <li><strong>أسس الوحدة الإنسانية:</strong> وحدة الأصل (كلنا من آدم)، وحدة الكرامة الإنسانية (ولقد كرمنا بني آدم).</li>
+          <li><strong>حقوق الإنسان في الإسلام:</strong> حق الحياة، حق التفكير والتعبير الحر، حق المساواة والعدل، وحق الاعتقاد (لا إكراه في الدين).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u6">
+    <div class="unit-header" onclick="toggleUnit('u6')">
+      <div class="unit-num">6</div>
+      <div class="unit-info">
+        <h2>الوحدة السادسة: الحضارة والنظم الإسلامية</h2>
+        <div class="unit-meta"><span>🏛️ بناء الحضارة</span><span>🌍 العلاقات الدولية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: بناء الحضارة في الإسلام</h3>
+        <p>الحضارة في الإسلام لا تقتصر على البنيان والماديات، بل هي مزيج متكامل.</p>
+        <ul>
+          <li><span class="highlight">الثقافة (الجانب المعنوي):</span> تشمل العقيدة، القيم، الأخلاق، الآداب، والعلوم الإنسانية (هي التي تميز أمة عن أخرى).</li>
+          <li><span class="highlight">المدنية (الجانب المادي):</span> تشمل العمران، الزراعة، التكنولوجيا، الصناعة (وهي جوانب يمكن نقلها وتبادلها بين الأمم بسهولة).</li>
+          <li><strong>العلاقة بينهما:</strong> علاقة تكامل، فالحضارة الشاملة = ثقافة + مدنية.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: أسس العلاقات الدولية في الإسلام</h3>
+        <p>تنطلق الدولة الإسلامية في تعاملها مع الدول الأخرى من مبادئ راسخة:</p>
+        <ul>
+          <li><strong>السلام:</strong> هو الأصل في العلاقة مع الآخرين، والحرب هي الاستثناء لدفع الظلم والعدوان.</li>
+          <li><strong>الوفاء بالعهود:</strong> أمر قطعي لا يجوز نقضه حتى مع الأعداء طالما التزموا به (أوفوا بالعهد إن العهد كان مسؤولاً).</li>
+          <li><strong>التعاون الدولي:</strong> لحماية البيئة، مكافحة الفقر والأمراض، ورد المظالم.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SECTION: MEMORIZATION -->
+<div id="memorization" class="section">
+  <div class="unit-card open" id="u-mem">
+    <div class="unit-header">
+      <div class="unit-num">M</div>
+      <div class="unit-info">
+        <h2>دليل قسم الاستحفاظ (القرآن والحديث)</h2>
+        <div class="unit-meta"><span>🧠 الحفظ الدقيق</span><span>✍️ التشكيل</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 كيف تضمن العلامة التامة في قسم الاستحفاظ؟</h3>
+        <p>في البكالوريا العلمي، يأخذ قسم التسميع (الآيات والأحاديث) حصة الأسد من الدرجات المضمونة التي تعتمد على الذاكرة.</p>
+        <ol>
+          <li><strong>كتابة الآيات:</strong> يجب أن تكتب الآية بالرسم الإملائي الواضح، و<span class="highlight">التشكيل إلزامي لأواخر الكلمات</span> (الحركات الإعرابية) وللكلمات التي يتغير معناها بتغير الحركة.</li>
+          <li><strong>الأحاديث النبوية:</strong> احفظ نص الحديث حرفياً كما ورد في الكتاب، ولا تنسَ حفظ "راوي الحديث" (مثال: عن عبد الله بن عباس رضي الله عنهما قال...).</li>
+          <li><strong>شرح المفردات:</strong> يأتي سؤال صريح (اشرح المفردات التالية). اكتب الشرح المعتمد في حاشية الكتاب المدرسي ولا تؤلف شرحاً من العامية.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: SIMULATOR -->
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:30px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🎭 محاكي المصطلحات الشرعية</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#64748b; font-size: 1.1rem;">اختر المصطلح ليقوم المحاكي بعرض تعريفه الفقهي الدقيق والمطلوب للامتحان.</p>
+
+    <div class="sim-box">
+      <div class="sim-field">
+        <label>اختر المصطلح للتحليل:</label>
+        <select id="termSelect" onchange="analyzeTerm()">
+          <option value="" disabled selected>-- اضغط لاختيار مصطلح هام --</option>
+          <option value="1">الإحرام (في الحج)</option>
+          <option value="2">سد الذرائع</option>
+          <option value="3">المصالح المرسلة</option>
+          <option value="4">الاستحسان</option>
+          <option value="5">الثقافة (في بناء الحضارة)</option>
+        </select>
+      </div>
+      
+      <div class="calc-result-box" id="term-result" style="display: none;">
+        <h3 style="color:var(--accent-light); margin-bottom:15px; font-size:1.4rem; font-family: 'Amiri', serif;" id="t-res-title"></h3>
+        <div style="font-size: 1.1rem; margin-bottom: 8px;" id="t-res-elements"></div>
+        <div style="font-size: 1.05rem; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border-right: 4px solid var(--accent-light); color: #e2e8f0; margin-top: 15px;" id="t-res-value"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: QUIZ -->
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة - بكالوريا تربية إسلامية 2026</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبر دقة حفظك للأحكام الشرعية والمفاهيم في هذا النموذج المصغر:</p>
+    <div id="islamic-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// فتح وإغلاق الوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// كشف التلميحات
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  const isVisible = box.classList.contains('visible');
+  
+  if(boxId === 'rev-hajj') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الجواب ▲' : '📝 سؤال امتحاني: ما الفرق بين الحج والعمرة؟ ▼';
+  }
+}
+
+// محاكي المصطلحات
+const termData = {
+  "1": {
+    text: "الإحرام (الركن الأول في الحج)",
+    elements: "نية الدخول في النسك (الحج أو العمرة) مقترناً بالتلبية، وله ميقات زماني ومكاني محدد.",
+    value: "الأهمية: لا ينعقد الحج بدونه إطلاقاً لأنه ركن أساسي."
+  },
+  "2": {
+    text: "سد الذرائع (مصادر التشريع)",
+    elements: "منع الوسائل والطرق المباحة في أصلها، إذا كانت تؤدي غالباً وبشكل مؤكد إلى مفسدة ومحرم.",
+    value: "مثال امتحاني: منع بيع العنب لمن يعصره خمراً."
+  },
+  "3": {
+    text: "المصالح المرسلة (مصادر التشريع)",
+    elements: "المصلحة التي لم يشرع الشارع حكماً لتحقيقها، ولم يدل دليل شرعي على اعتبارها أو إلغائها.",
+    value: "مثال امتحاني: جمع القرآن في مصحف واحد، وضع إشارات المرور لحفظ الأرواح."
+  },
+  "4": {
+    text: "الاستحسان (مصادر التشريع)",
+    elements: "العدول (الانتقال) عن حكم دل عليه دليل في مسألة، إلى حكم آخر فيها لوجه أقوى ومصلحة راجحة.",
+    value: "مثال امتحاني: تضمين الأجير المشترك (الخياط، الحرفي) عند تلف بضاعة الناس للحفاظ عليها."
+  },
+  "5": {
+    text: "الثقافة (بناء الحضارة)",
+    elements: "الجانب المعنوي للحضارة؛ يشمل العقائد، والقيم، والأخلاق، والآداب، والعلوم الإنسانية التي تميز أمة عن أخرى.",
+    value: "القاعدة: المدنية (الماديات) يمكن نقلها من أمة لأخرى، أما الثقافة فهي هوية الأمة التي يجب الحفاظ عليها."
+  }
+};
+
+function analyzeTerm() {
+  const selection = document.getElementById('termSelect').value;
+  if (!selection) return;
+  
+  const data = termData[selection];
+  
+  document.getElementById('t-res-title').innerText = data.text;
+  document.getElementById('t-res-elements').innerHTML = `<strong style="color:#fbbf24;">التعريف الامتحاني:</strong><br>${data.elements}`;
+  document.getElementById('t-res-value').innerHTML = `<strong>الربط الامتحاني:</strong><br>${data.value}`;
+  
+  document.getElementById('term-result').style.display = 'block';
+}
+
+// قاعدة بيانات الأسئلة المؤتمتة (التربية الإسلامية)
+const islamicQuizData = [
+  { q: "الوقوف بعرفة في مناسك الحج يُعتبر من:", opts: ["سنن الحج", "أركان الحج", "واجبات الحج", "مستحبات الحج"], ans: 1 },
+  { q: "جمع القرآن الكريم في مصحف واحد في عهد أبي بكر الصديق يعتبر تطبيقاً لدليل شرعي هو:", opts: ["الاستحسان", "العرف", "المصالح المرسلة", "سد الذرائع"], ans: 2 },
+  { q: "حكم طواف الوداع في الحج هو:", opts: ["ركن يفسد الحج بتركه", "سنة يُثاب فاعلها", "واجب يُجبر بدم إن تُرك", "مكروه"], ans: 2 },
+  { q: "الجانب الذي يعبر عن الإنجازات المادية (عمران، صناعة، تكنولوجيا) في الحضارة يُسمى:", opts: ["الثقافة", "الأخلاق", "المدنية", "العقيدة"], ans: 2 },
+  { q: "في مثل قوله تعالى (اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ)، ترمز (المشكاة) إلى:", opts: ["الإيمان", "قلب المؤمن الصافي", "صدر المؤمن", "القرآن الكريم"], ans: 2 }
+];
+
+function buildIslamicQuiz() {
+  const container = document.getElementById('islamic-quiz-box');
+  container.innerHTML = '';
+  islamicQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">السؤال ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkIslamicAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkIslamicAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === islamicQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[islamicQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل المبدئي
+window.onload = function() {
+  buildIslamicQuiz();
+};
+</script>
+</body>
+</html>

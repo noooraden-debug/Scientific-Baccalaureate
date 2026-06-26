@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🪆 الموسوعة التفاعلية في اللغة الروسية - سلسلة الذكي | بكالوريا علمي 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #b91c1c; /* Russian Red */
+    --primary-light: #ef4444;
+    --primary-pale: #fef2f2;
+    --accent: #1e3a8a; /* Deep Blue */
+    --accent-light: #3b82f6;
+    --accent-pale: #eff6ff;
+    --gold: #f59e0b; /* Golden Amber */
+    --dark: #0f172a;
+    --text: #1e293b;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.9;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #0f172a 0%, #b91c1c 50%, #991b1b 100%);
+    color: white;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(185, 28, 28, 0.3);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(30,58,138,0.15) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    font-family: 'Amiri', serif;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-top: 15px;
+    color: #fca5a5;
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.9rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.8); padding: 16px 20px; cursor: pointer;
+    font-size: 0.95rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: white; border-bottom-color: var(--primary-light); background: rgba(255,255,255,0.05);
+  }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 35px 15px; }
+  .section { display: none; animation: slideIn 0.4s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.04); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 6px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.9rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900; color: white; flex-shrink: 0; font-family: 'Amiri', serif;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(185, 28, 28, 0.3);
+  }
+  .unit-info h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 4px; color: var(--dark); }
+  .unit-meta { font-size: 0.88rem; color: #64748b; font-weight: 600; display: flex; gap: 12px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 30px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 25px; margin-bottom: 25px;
+    border-right: 4px solid var(--accent);
+  }
+  .lesson-block h3 { font-size: 1.2rem; font-weight: 800; color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;}
+  .lesson-block p { margin-bottom: 15px; font-weight: 600; color: #334155; text-align: justify; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 15px 0; font-weight: 600; color: #1e293b; }
+  .lesson-block li { margin-bottom: 12px; }
+
+  .russian-text {
+    background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; padding: 20px; margin: 15px 0;
+    font-family: 'Times New Roman', Times, serif; font-size: 1.3rem; text-align: left; color: var(--dark); line-height: 1.8; direction: ltr;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+  }
+
+  .highlight { color: var(--primary); font-weight: 800; }
+  .highlight-blue { color: var(--accent); font-weight: 800; }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 15px; font-weight: 800; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); }
+  .summary-table td { padding: 15px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; border-right: 1px solid #f1f5f9; direction: rtl;}
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: white; border: none; border-radius: 8px; padding: 12px 25px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 800; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 20px; margin: 15px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 700; color: var(--dark); border-right: 6px solid var(--accent);
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #0f172a, #b91c1c); color: white; border-radius: 14px; padding: 30px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-field { margin-bottom: 20px; }
+  .sim-field label { display: block; font-size: 1rem; color: #fca5a5; font-weight: bold; margin-bottom: 10px; }
+  .sim-field select { width: 100%; padding: 14px; border-radius: 8px; border: 2px solid #fca5a5; font-size: 1.1rem; background: rgba(255,255,255,0.1); color: white; font-family: 'Times New Roman', serif; font-weight: bold; cursor: pointer; outline: none; direction: ltr; }
+  .sim-field select option { background: var(--dark); color: white; }
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin-top: 25px; border-right: 5px solid #fca5a5;
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 30px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.25rem; margin-bottom: 20px; color: var(--dark); direction: ltr; text-align: left; font-family: 'Times New Roman', serif;}
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; direction: ltr;}
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; cursor: pointer;
+    font-family: 'Times New Roman', serif; font-size: 1.1rem; text-align: left; transition: all 0.2s; font-weight: 700; color: var(--text);
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+  .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid var(--gold); border-radius: 12px; padding: 25px; margin: 20px 0; display: flex; gap: 18px; align-items: flex-start;}
+  .gold-tip .icon { font-size: 2.2rem; line-height: 1;}
+  .gold-tip .text { font-size: 1rem; color: #78350f; font-weight: 800; line-height: 1.8;}
+
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🪆 الموسوعة التفاعلية في اللغة الروسية</h1>
+  <div class="subtitle">سلسلة الذكي | البكالوريا العلمي السوري 2026 (Русский язык)</div>
+  <div class="badge-row">
+    <span class="badge">🇷🇺 النصوص والمفردات</span>
+    <span class="badge">⚙️ الحالات الإعرابية (Падежи)</span>
+    <span class="badge">📝 الترجمة والمواضيع</span>
+    <span class="badge">🔄 أفعال الحركة والمظهر</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 خريطة المادة الامتحانية</button>
+  <button class="nav-btn" onclick="showSection('units')">📖 الوحدات والنصوص</button>
+  <button class="nav-btn" onclick="showSection('grammar')">⚙️ قواعد (Грамматика)</button>
+  <button class="nav-btn" onclick="showSection('writing')">📝 الترجمة والموضوع</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🎭 محاكي الحالات الإعرابية</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الأتمتة الروسي</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 15px; text-align: center;">🎯 استراتيجية السيطرة على ورقة اللغة الروسية (البكالوريا العلمي)</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569; margin-bottom: 20px;">تتميز اللغة الروسية باعتمادها المطلق على "الحالات الإعرابية الستة" التي تغير نهايات الكلمات حسب موقعها في الجملة. إتقانك لهذه النهايات يضمن لك العلامة التامة.</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>القسم الامتحاني (Экзамен)</th>
+            <th>التركيز المطلوب والمفاتيح</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>أولاً: قراءة النصوص (Чтение)</td><td>نص من الكتاب حول (المدن، العلم، المهن، الرياضة). المطلوب فهم الفكرة العامة، اختيار الإجابة الصحيحة، صح/خطأ.</td></tr>
+          <tr><td>ثانياً: المفردات (Лексика)</td><td>توصيل الكلمات بمعانيها أو أضدادها (المرادفات Синонимы / الأضداد Антонимы).</td></tr>
+          <tr><td>ثالثاً: القواعد (Грамматика)</td><td>تحديد الحالة الإعرابية الصحيحة (نهايات الأسماء والصفات)، أفعال الحركة (Глаголы движения)، المظهر المكتمل وغير المكتمل (СВ / НСВ).</td></tr>
+          <tr><td>رابعاً: الترجمة (Перевод)</td><td>ترجمة جمل من الروسية للعربية وبالعكس، تعتمد على نصوص الكتاب الأساسية.</td></tr>
+          <tr><td>خامساً: الموضوع (Письмо)</td><td>كتابة موضوع من 40-50 كلمة عن أحد العناوين المحددة (عائلتي، مستقبلي، مدينتي، يوم العطلة).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>القاعدة الذهبية في اللغة الروسية:</strong> دائماً اسأل نفسك قبل اختيار الكلمة: "ما هو الفعل أو حرف الجر الذي يسبقها؟"
+        <br>- إذا رأيت حرف الجر (в / на) يدل على مكان ➔ اختر الكلمة التي تنتهي بـ (е / и) (حالة الجر).
+        <br>- إذا رأيت فعل يعبر عن حب أو رؤية (любить / видеть) ➔ اختر الكلمة بحالة المفعول به (у / ю للمؤنث).
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+  
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: مدينتي والعالم (Мой город и мир)</h2>
+        <div class="unit-meta"><span>🏙️ دمشق وموسكو</span><span>🌍 الجغرافيا الروسية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 Text Summary: Москва и Дамаск (موسكو ودمشق)</h3>
+        <p>يقارن النص بين العاصمة الروسية موسكو والعاصمة السورية دمشق، من حيث التاريخ، الساحات الشهيرة (الساحة الحمراء والمسجد الأموي)، والأهمية الثقافية.</p>
+        <div class="russian-text">
+          "Дамаск — это столица Сирии, один из самых древних городов в мире. Москва — столица России. В центре Москвы находится Красная площадь."
+        </div>
+        <ul>
+          <li><strong>أهم المفردات (Словарь):</strong>
+            <br>- <span class="highlight">Столица:</span> عاصمة.
+            <br>- <span class="highlight">Древний:</span> قديم (عريق).
+            <br>- <span class="highlight">Площадь:</span> ساحة / ميدان.
+            <br>- <span class="highlight">Находиться:</span> يقع / يتواجد.
+          </li>
+          <li><strong>التركيز القواعدي:</strong> حالة الجر (Предложный падеж) للإجابة عن سؤال "Где?" (أين؟). نضيف عادة حرف (е) لنهاية الاسم (в центре).</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-ru-unit1')">📝 ترجمة هامة ▼</button>
+        <div class="reveal-box" id="rev-ru-unit1">
+          <strong>الروسية:</strong> Я живу в красивом городе Дамаске.<br>
+          <strong>العربية:</strong> أنا أعيش في مدينة دمشق الجميلة.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: العلم والعلماء (Наука и учёные)</h2>
+        <div class="unit-meta"><span>🔬 الكيمياء والفيزياء</span><span>👨‍🔬 مندلييف ولومونوسوف</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 Text Summary: Великие учёные (العلماء العظماء)</h3>
+        <p>يتحدث النص عن الإسهامات العلمية للعلماء الروس، خاصة ديمتري مندلييف الذي وضع الجدول الدوري للعناصر، وميخائيل لومونوسوف مؤسس جامعة موسكو.</p>
+        <div class="russian-text">
+          "Дмитрий Менделеев — великий русский химик. Он создал периодическую таблицу химических элементов. Михаил Ломоносов основал первый университет в России."
+        </div>
+        <ul>
+          <li><strong>أهم المفردات:</strong>
+            <br>- <span class="highlight">Учёный:</span> عالِم.
+            <br>- <span class="highlight">Создал:</span> أنشأ / ابتكر.
+            <br>- <span class="highlight">Основал:</span> أسّس.
+            <br>- <span class="highlight">Университет:</span> جامعة.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: المهن والمستقبل (Профессии и будущее)</h2>
+        <div class="unit-meta"><span>💼 العمل والطموح</span><span>🎓 الدراسة الجامعية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 Text Summary: Кем я хочу стать? (ماذا أريد أن أصبح؟)</h3>
+        <p>نص حواري بين الطلاب حول طموحاتهم المستقبلية. البعض يريد أن يصبح طبيباً، والبعض مهندساً أو مبرمجاً، وأهمية دراسة اللغات الأجنبية لتحقيق ذلك.</p>
+        <ul>
+          <li><strong>التركيز القواعدي:</strong> استخدام الحالة الآلية (Творительный падеж) مع الفعل "стать" (أن يصبح).
+            <br><i>مثال:</i> Я хочу стать <span class="highlight">врачом</span> (أريد أن أصبح طبيباً - نضيف ом للاسم المذكر).
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="grammar" class="section">
+
+  <div class="unit-card open" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">Г</div>
+      <div class="unit-info">
+        <h2>القواعد النحوية الروسية (Грамматика)</h2>
+        <div class="unit-meta"><span>⚙️ Падежи (الحالات الست)</span><span>🏃 Глаголы (الأفعال)</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 جدول ملخص الحالات الإعرابية (Сводная таблица падежей)</h3>
+        <p>هذا الجدول هو "قلب" اللغة الروسية. يعتمد الحل في الامتحان على معرفة السؤال الذي تجيب عنه الكلمة، أو حرف الجر الذي يسبقها.</p>
+        <table class="summary-table" style="direction: ltr;">
+          <tr><th>Падеж (الحالة)</th><th>Вопросы (الأسئلة)</th><th>Предлоги (أحرف الجر)</th><th>Пример (مثال)</th></tr>
+          <tr><td>1. Именительный (الرفع)</td><td>Кто? Что? (مَن؟ ماذا؟)</td><td>-</td><td>Это <span class="highlight-blue">студент</span>. (هذا طالب)</td></tr>
+          <tr><td>2. Родительный (الإضافة)</td><td>Кого? Чего? (لمَن؟ لِماذا؟)</td><td>у, из, от, без, для</td><td>У меня нет <span class="highlight-blue">брата</span>. (ليس لدي أخ)</td></tr>
+          <tr><td>3. Дательный (المقصود)</td><td>Кому? Чему? (إلى مَن؟)</td><td>к, по</td><td>Я даю книгу <span class="highlight-blue">другу</span>. (أعطي الكتاب لصديق)</td></tr>
+          <tr><td>4. Винительный (المفعول به)</td><td>Кого? Что? (مَن؟ ماذا؟ "مفعول")</td><td>в, на (اتجاه), за</td><td>Я читаю <span class="highlight-blue">книгу</span>. (أنا أقرأ كتاباً)</td></tr>
+          <tr><td>5. Творительный (الآلية)</td><td>Кем? Чем? (بمَن؟ بماذا؟ "مع")</td><td>с, над, под, перед</td><td>Я говорю с <span class="highlight-blue">отцом</span>. (أتحدث مع الأب)</td></tr>
+          <tr><td>6. Предложный (المجرور)</td><td>О ком? О чём? Где? (عن مَن؟ أين؟)</td><td>в, на (مكان), о, об</td><td>Он живёт в <span class="highlight-blue">Москве</span>. (يعيش في موسكو)</td></tr>
+        </table>
+      </div>
+
+      <div class="lesson-block">
+        <h3>📌 أفعال المظهر (Виды глагола)</h3>
+        <p>في الروسية، كل فعل له شكلان: <strong>مكتمل (СВ - Совершенный вид)</strong> و <strong>غير مكتمل (НСВ - Несовершенный вид)</strong>.</p>
+        <ul>
+          <li><strong>غير المكتمل (НСВ):</strong> يدل على الاستمرارية، التكرار، أو العملية نفسها.
+            <br><i>كلمات مفتاحية:</i> всегда (دائماً), часто (غالباً), каждый день (كل يوم).
+            <br><i>مثال:</i> Я <span class="highlight">читал</span> книгу вчера. (كنت أقرأ الكتاب البارحة - لم أنهه).</li>
+          <li><strong>المكتمل (СВ):</strong> يدل على نتيجة، لمرة واحدة، أو إنجاز الفعل كاملاً.
+            <br><i>كلمات مفتاحية:</i> вдруг (فجأة), один раз (مرة واحدة), уже (بالفعل).
+            <br><i>مثال:</i> Я <span class="highlight">прочитал</span> книгу. (أنهيت قراءة الكتاب تماماً).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="writing" class="section">
+  <div class="unit-card open" id="u5">
+    <div class="unit-header">
+      <div class="unit-num">П</div>
+      <div class="unit-info">
+        <h2>هيكل الموضوع الروسي (Письмо)</h2>
+        <div class="unit-meta"><span>📐 الجمل الثابتة</span><span>🏆 قوالب مضمونة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 القالب الذهبي لكتابة الموضوع (Шаблон для сочинения)</h3>
+        <p>الموضوع في اللغة الروسية يحتاج إلى جمل بسيطة وصحيحة قواعدياً. احذر من تعقيد الجمل. إليك هيكل يمكن تكييفه لمعظم المواضيع:</p>
+        <ol>
+          <li><strong>المقدمة (Введение):</strong>
+            <br><span class="russian-text">Меня зовут [Имя]. Я учусь в школе. Сегодня я хочу рассказать о [тема: моей семье / моём городе].</span>
+            <br>(اسمي [...]. أنا أدرس في المدرسة. اليوم أريد أن أتحدث عن [عائلتي/مدينتي]).</li>
+          <li><strong>العرض (Основная часть):</strong> استخدم صفات وأفعال بسيطة.
+            <br><span class="russian-text">Это очень важно для меня. Я люблю [тема], потому что это интересно и полезно.</span>
+            <br>(هذا مهم جداً بالنسبة لي. أنا أحب [الموضوع]، لأن ذلك ممتع ومفيد).</li>
+          <li><strong>الخاتمة (Заключение):</strong>
+            <br><span class="russian-text">В конце концов, я надеюсь, что всё будет хорошо. Спасибо за внимание!</span>
+            <br>(في النهاية، آمل أن يكون كل شيء على ما يرام. شكراً لانتباهكم!).</li>
+        </ol>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-ru-writing')">📝 نموذج جاهز: مهنتي المستقبلية (Моя будущая профессия) ▼</button>
+        <div class="reveal-box" id="rev-ru-writing">
+          <div class="russian-text" style="font-size: 1.1rem; margin-top: 0;">
+            Меня зовут Ахмад. В этом году я заканчиваю школу. Я хочу стать врачом, потому что я люблю помогать людям. Это очень благородная и важная профессия. Для этого я много изучаю биологию и химию. Я надеюсь поступить в медицинский университет.
+          </div>
+          <strong>الترجمة:</strong> اسمي أحمد. هذا العام أنهي المدرسة. أريد أن أصبح طبيباً، لأنني أحب مساعدة الناس. هذه مهنة نبيلة ومهمة جداً. من أجل ذلك أنا أدرس الأحياء والكيمياء كثيراً. آمل أن ألتحق بجامعة الطب.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:30px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🎭 محاكي الحالات الإعرابية (Анализатор падежей)</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#64748b; font-size: 1.1rem;">اختر الجملة الروسية ليقوم المحاكي بتشريح القاعدة الإعرابية للكلمة الملونة، تحديد الحالة الإعرابية (Падеж)، والسبب.</p>
+
+    <div class="sim-box" style="direction: ltr; text-align: left;">
+      <div class="sim-field">
+        <label style="color: #fca5a5;">Выберите предложение (Select a sentence):</label>
+        <select id="grammarSelect" onchange="analyzeRussianGrammar()">
+          <option value="" disabled selected>-- Выберите... (Choose...) --</option>
+          <option value="1">Мой друг живёт в [Москве].</option>
+          <option value="2">Я читаю интересную [книгу].</option>
+          <option value="3">У меня нет [брата].</option>
+          <option value="4">Я хочу стать [врачом].</option>
+          <option value="5">Я даю тетрадь моему [учителю].</option>
+        </select>
+      </div>
+      
+      <div class="calc-result-box" id="grammar-result" style="display: none; direction: ltr;">
+        <h3 style="color:#fca5a5; margin-bottom:15px; font-size:1.4rem; font-family: 'Times New Roman', serif;" id="g-res-title"></h3>
+        <div style="font-size: 1.25rem; font-weight: bold; color: #fff; margin: 15px 0;" id="g-res-type"></div>
+        <div style="font-size: 1.1rem; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border-left: 4px solid #fca5a5; color: #e2e8f0;" id="g-res-value"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة - لغة روسية (Тесты)</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبر قدرتك على تحديد النهايات الإعرابية الصحيحة (الأهم في الامتحان):</p>
+    <div id="russian-quiz-box" style="direction: ltr;"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// فتح وإغلاق الوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// كشف التلميحات
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  const isVisible = box.classList.contains('visible');
+  
+  if(boxId === 'rev-ru-unit1') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الترجمة ▲' : '📝 ترجمة هامة ▼';
+  } else if(boxId === 'rev-ru-writing') {
+    btn.innerHTML = isVisible ? '❌ إخفاء النموذج ▲' : '📝 نموذج جاهز: مهنتي المستقبلية ▼';
+  }
+}
+
+// محاكي القواعد الروسية
+const ruGrammarData = {
+  "1": {
+    text: 'Мой друг живёт в [Москве].',
+    type: "Падеж 6: Предложный (Prepositional Case / حالة الجر - المكان)",
+    value: "<strong>Reason:</strong> The preposition 'в' (in) indicating location answers the question 'Где?' (Where?). Therefore, the noun 'Москва' takes the ending '-е'."
+  },
+  "2": {
+    text: 'Я читаю интересную [книгу].',
+    type: "Падеж 4: Винительный (Accusative Case / حالة المفعول به)",
+    value: "<strong>Reason:</strong> The verb 'читаю' (I read) takes a direct object. It answers the question 'Что?' (What?). The feminine noun 'книга' changes its ending 'а' to 'у'."
+  },
+  "3": {
+    text: 'У меня нет [брата].',
+    type: "Падеж 2: Родительный (Genitive Case / حالة الإضافة - النفي)",
+    value: "<strong>Reason:</strong> The word 'нет' (there is no / not) always requires the Genitive case. It answers the question 'Кого нет?'. The masculine noun 'брат' takes the ending '-а'."
+  },
+  "4": {
+    text: 'Я хочу стать [врачом].',
+    type: "Падеж 5: Творительный (Instrumental Case / الحالة الآلية)",
+    value: "<strong>Reason:</strong> The verb 'стать' (to become) always requires the Instrumental case for the profession. It answers the question 'Кем?'. The masculine noun 'врач' takes the ending '-ом'."
+  },
+  "5": {
+    text: 'Я даю тетрадь моему [учителю].',
+    type: "Падеж 3: Дательный (Dative Case / حالة المقصود - لمن؟)",
+    value: "<strong>Reason:</strong> The verb 'давать' (to give) requires an indirect object (to whom?). It answers the question 'Кому?'. The noun 'учитель' takes the ending '-ю'."
+  }
+};
+
+function analyzeRussianGrammar() {
+  const selection = document.getElementById('grammarSelect').value;
+  if (!selection) return;
+  
+  const data = ruGrammarData[selection];
+  
+  document.getElementById('g-res-title').innerText = data.text;
+  document.getElementById('g-res-type').innerText = data.type;
+  document.getElementById('g-res-value').innerHTML = data.value;
+  
+  document.getElementById('grammar-result').style.display = 'block';
+}
+
+// قاعدة بيانات الأسئلة المؤتمتة (روسي)
+const russianQuizData = [
+  { q: "1. Мой брат учится в _________.", opts: ["университет", "университета", "университету", "университете"], ans: 3 },
+  { q: "2. Я очень люблю слушать _________.", opts: ["музыка", "музыку", "музыке", "музыкой"], ans: 1 },
+  { q: "3. Вчера мы _________ интересный фильм.", opts: ["смотрели", "смотрим", "будем смотреть", "смотреть"], ans: 0 },
+  { q: "4. Это книга моего _________.", opts: ["друг", "другу", "другом", "друга"], ans: 3 },
+  { q: "5. Анна хочет стать _________.", opts: ["учительница", "учительнице", "учительницу", "учительницей"], ans: 3 }
+];
+
+function buildRussianQuiz() {
+  const container = document.getElementById('russian-quiz-box');
+  container.innerHTML = '';
+  russianQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkRussianAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkRussianAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === russianQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[russianQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل المبدئي
+window.onload = function() {
+  buildRussianQuiz();
+};
+</script>
+</body>
+</html>

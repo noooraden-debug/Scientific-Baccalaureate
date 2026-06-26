@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇸🇾 الموسوعة التفاعلية في التربية الوطنية - سلسلة الذكي | بكالوريا علمي 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #064e3b; /* Deep National Green */
+    --primary-light: #15803d;
+    --primary-pale: #f0fdf4;
+    --accent: #b45309; /* Gold / Amber */
+    --accent-light: #d97706;
+    --accent-pale: #fffbeb;
+    --dark: #022c22;
+    --text: #1e293b;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.9;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #15803d 100%);
+    color: white;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(6, 78, 59, 0.3);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(217,119,6,0.15) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    font-family: 'Amiri', serif;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-top: 15px;
+    color: var(--accent-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(217,119,6,0.4);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.9rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.8); padding: 16px 20px; cursor: pointer;
+    font-size: 0.95rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--accent-light); border-bottom-color: var(--accent-light); background: rgba(255,255,255,0.05);
+  }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 35px 15px; }
+  .section { display: none; animation: slideIn 0.4s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.04); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 6px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.9rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900; color: white; flex-shrink: 0; font-family: 'Amiri', serif;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(6, 78, 59, 0.3);
+  }
+  .unit-info h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 4px; color: var(--dark); }
+  .unit-meta { font-size: 0.88rem; color: #64748b; font-weight: 600; display: flex; gap: 12px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 30px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 25px; margin-bottom: 25px;
+    border-right: 4px solid var(--accent);
+  }
+  .lesson-block h3 { font-size: 1.2rem; font-weight: 800; color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;}
+  .lesson-block p { margin-bottom: 15px; font-weight: 600; color: #334155; text-align: justify; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 15px 0; font-weight: 600; color: #1e293b; }
+  .lesson-block li { margin-bottom: 12px; }
+
+  .highlight { color: var(--primary-light); font-weight: 800; }
+  .term-box { background: #fef2f2; border: 1px solid #fca5a5; padding: 15px; border-radius: 8px; margin: 10px 0; color: #991b1b; font-weight: bold;}
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 15px; font-weight: 800; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); }
+  .summary-table td { padding: 15px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; border-right: 1px solid #f1f5f9;}
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), #d97706);
+    color: white; border: none; border-radius: 8px; padding: 12px 25px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 800; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 20px; margin: 15px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 700; color: var(--dark); border-right: 6px solid var(--accent);
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #022c22, #064e3b); color: white; border-radius: 14px; padding: 30px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-field { margin-bottom: 20px; }
+  .sim-field label { display: block; font-size: 1rem; color: var(--accent-light); font-weight: bold; margin-bottom: 10px; }
+  .sim-field select { width: 100%; padding: 14px; border-radius: 8px; border: 2px solid var(--accent); font-size: 1.1rem; background: rgba(255,255,255,0.05); color: white; font-family: 'Amiri', serif; font-weight: bold; cursor: pointer; outline: none; }
+  .sim-field select option { background: var(--dark); color: white; }
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin-top: 25px; border-right: 5px solid var(--accent-light);
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 30px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.15rem; margin-bottom: 20px; color: var(--dark); font-family: 'Amiri', serif;}
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 1rem; text-align: right; transition: all 0.2s; font-weight: 700; color: var(--text);
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+  .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 25px; margin: 20px 0; display: flex; gap: 18px; align-items: flex-start;}
+  .gold-tip .icon { font-size: 2.2rem; line-height: 1;}
+  .gold-tip .text { font-size: 1rem; color: #78350f; font-weight: 800; line-height: 1.8;}
+
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🇸🇾 الموسوعة التفاعلية في التربية الوطنية</h1>
+  <div class="subtitle">سلسلة الذكي | البكالوريا العلمي السوري 2026 (محدث وشامل)</div>
+  <div class="badge-row">
+    <span class="badge">🧠 الفكر والسياسة</span>
+    <span class="badge">🏛️ الإدارة والمؤسسات</span>
+    <span class="badge">⚖️ الدستور والقانون</span>
+    <span class="badge">🌍 قضايا معاصرة</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 خريطة الـ 200 درجة</button>
+  <button class="nav-btn" onclick="showSection('unit12')">🧠 الوحدة 1 و 2 (السياسة والإدارة)</button>
+  <button class="nav-btn" onclick="showSection('unit34')">⚖️ الوحدة 3 و 4 (القانون والقضايا)</button>
+  <button class="nav-btn" onclick="showSection('case-study')">📝 دراسة الحالة (الموضوع)</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🎭 محاكي المصطلحات</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الأتمتة الشامل</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 15px; text-align: center;">🎯 استراتيجية السيطرة على ورقة التربية الوطنية (200 درجة للعلمي)</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569; margin-bottom: 20px;">التربية الوطنية ليست مادة "بصم" عشوائي، بل هي مادة تعتمد على فهم هيكلية الدولة والقوانين والمفاهيم. مع التحول نحو الأتمتة وأسئلة دراسة الحالة، أصبح الفهم والربط هو مفتاح العلامة التامة.</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>القسم الامتحاني</th>
+            <th>الوصف وآلية الحل</th>
+            <th>التركيز المطلوب</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>أسئلة الأتمتة (الاختيار من متعدد)</td><td>تشمل تعاريف، تواريخ، مفاهيم رئيسية، وأسماء مؤسسات.</td><td>حفظ دقيق للمصطلحات، وفهم الفروقات (مثال: الفرق بين المجتمع المدني والأهلي).</td></tr>
+          <tr><td>الأسئلة المقالية القصيرة (التعليل والشرح)</td><td>تتطلب الإجابة بنقاط (1، 2، 3). ابتعد عن السرد الإنشائي المتصل.</td><td>احفظ رؤوس الأقلام وضع خطاً تحت الكلمات المفتاحية في كل فقرة.</td></tr>
+          <tr><td>دراسة الحالة (النص الاستنتاجي)</td><td>نص خارجي أو من الكتاب تليه أسئلة (استنتج، ما رأيك، اقترح حلولاً).</td><td>فهم المبدأ. الإجابة غالباً تكون استنتاجية وتعتمد على ثقافة الطالب من وحي المنهج.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>القاعدة الذهبية في التربية الوطنية:</strong> استخدم طريقة "الكلمات المفتاحية". لا تحفظ الفقرة المكونة من 5 أسطر حرفياً! استخرج منها 3 أفعال رئيسية أو كلمات دلالية وابنِ عليها جملتك في الامتحان. المصحح يبحث عن الكلمة العلمية المحددة (السلم الأهلي، سيادة القانون، فصل السلطات) ولن يحاسبك على حرفية السرد.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="unit12" class="section">
+  
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: الفكر والسياسة</h2>
+        <div class="unit-meta"><span>🧠 الفكر القومي</span><span>🤝 المجتمع المدني والأهلي</span><span>🗳️ الأحزاب السياسية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: الفكر القومي وتطوره</h3>
+        <p>يركز هذا الدرس على نشأة الفكر الذي يجمع الأمة ويوحد أهدافها، والتحديات التي واجهته عبر التاريخ.</p>
+        <ul>
+          <li><strong>مفهوم الفكر القومي:</strong> هو مجموعة المبادئ والقيم والروابط (لغة، تاريخ، أرض، مصير مشترك) التي تشعر الفرد بانتمائه لأمته وتدفعه للدفاع عنها.</li>
+          <li><strong>أهداف الفكر القومي العربي:</strong>
+            <ol>
+              <li>التحرر من الاستعمار والتبعية بكافة أشكالها.</li>
+              <li>تحقيق الوحدة العربية الشاملة.</li>
+              <li>بناء مجتمع عربي ديمقراطي متقدم يحقق العدالة الاجتماعية.</li>
+            </ol>
+          </li>
+          <li><strong>مقومات الأمة العربية (سؤال مكرر):</strong> اللغة العربية (الوعاء الثقافي)، التاريخ المشترك (صانع الذاكرة)، الأرض (الجغرافيا المتصلة)، التراث الروحي والمصير المشترك.</li>
+        </ul>
+      </div>
+
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: المجتمع المدني والمجتمع الأهلي</h3>
+        <p>هنا يجب التركيز بشدة على <span class="highlight">المقارنة والفروقات</span> بينهما، فهو سؤال امتحاني كلاسيكي.</p>
+        <table class="summary-table">
+          <tr><th>وجه المقارنة</th><th>المجتمع الأهلي (التقليدي)</th><th>المجتمع المدني (الحديث)</th></tr>
+          <tr><td><strong>أساس الانتماء</strong></td><td>انتماء موروث (عائلة، قبيلة، طائفة). غير إرادي.</td><td>انتماء طوعي إرادي (نقابات، جمعيات، أحزاب).</td></tr>
+          <tr><td><strong>طبيعة العلاقات</strong></td><td>علاقات شخصية، عاطفية، تعتمد على العرف.</td><td>علاقات تعاقدية، مهنية، يحكمها القانون والمؤسسات.</td></tr>
+          <tr><td><strong>الهدف</strong></td><td>التكافل وحماية أفراد الجماعة المغلقة.</td><td>الدفاع عن مصالح عامة أو مهنية، الرقابة، التنمية الشاملة.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: الإدارة والمؤسسات</h2>
+        <div class="unit-meta"><span>🏢 الإدارة العامة</span><span>📊 الشفافية والمساءلة</span><span>📈 المشروعات الصغيرة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: الإدارة العامة والتطوير المؤسسي</h3>
+        <p>النجاح في بناء الدولة يعتمد على إدارة ناجحة تخطط وتنفذ برامج التنمية وتخدم المواطن بكفاءة.</p>
+        <ul>
+          <li><strong>وظائف الإدارة الأساسية (احفظها بالترتيب):</strong>
+            <br>1. التخطيط (وضع الأهداف)
+            <br>2. التنظيم (توزيع المهام)
+            <br>3. التوجيه والقيادة (تحفيز العاملين)
+            <br>4. الرقابة (التقييم وتصحيح الأخطاء).
+          </li>
+        </ul>
+        <div class="term-box">
+          <strong>الشفافية (Transparency):</strong> وضوح التشريعات وسهولة وصول المواطن للمعلومات المتعلقة بالقرارات الحكومية وميزانيات المشاريع، مما يمنع الفساد.
+        </div>
+        <div class="term-box">
+          <strong>المساءلة (Accountability):</strong> خضوع المسؤولين للمحاسبة القانونية والإدارية عن قراراتهم ونتائج أعمالهم أمام الجهات الرقابية والشعب.
+        </div>
+      </div>
+      
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: المشروعات الصغيرة والمتوسطة (SMEs)</h3>
+        <p>تعتبر العمود الفقري لاقتصاد أي دولة حديثة، ولها دور حاسم في سوريا في مرحلة إعادة الإعمار.</p>
+        <ul>
+          <li><strong>أهميتها الاقتصادية والاجتماعية:</strong>
+            <br>- امتصاص البطالة وتوفير فرص عمل سريعة ومحلية.
+            <br>- لا تحتاج إلى رؤوس أموال ضخمة أو تكنولوجيا معقدة.
+            <br>- تلبية احتياجات السوق المحلي وتقليل الاستيراد (توفير القطع الأجنبي).
+            <br>- تحقيق التنمية المتوازنة بين الريف والمدينة.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="unit34" class="section">
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: الدستور والقانون</h2>
+        <div class="unit-meta"><span>📜 دستور الجمهورية العربية السورية</span><span>⚖️ السلطات الثلاث</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: الدستور السوري (2012)</h3>
+        <p>الدستور هو القانون الأعلى في البلاد، يحدد شكل الدولة، نظام الحكم، وحقوق وواجبات المواطنين.</p>
+        <ul>
+          <li><strong>المبادئ الأساسية في الدستور السوري:</strong>
+            <br>- <span class="highlight">المبدأ السياسي:</span> سوريا دولة ديمقراطية ذات سيادة، الشعب هو صاحب السيادة ويمارسها عبر الانتخابات. نظام الحكم جمهوري.
+            <br>- <span class="highlight">المبدأ الاقتصادي:</span> الاقتصاد السوري اقتصاد مختلط (عام، خاص، مشترك) يهدف لتحقيق التنمية والعدالة الاجتماعية.
+            <br>- <span class="highlight">المبدأ الاجتماعي:</span> التضامن والتكافل، والأسرة هي خلية المجتمع الأساسية والدولة تحميها.
+          </li>
+        </ul>
+      </div>
+
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: السلطات العامة في الدولة</h3>
+        <p>يعتمد النظام السوري على مبدأ "فصل السلطات مع التعاون بينها".</p>
+        <table class="summary-table">
+          <tr><th>السلطة</th><th>مكوناتها</th><th>مهامها واختصاصاتها الأساسية</th></tr>
+          <tr><td><strong>التشريعية</strong></td><td>مجلس الشعب (البرلمان)</td><td>إقرار القوانين، إقرار الموازنة العامة للدولة، حجب الثقة عن الحكومة، إقرار المعاهدات.</td></tr>
+          <tr><td><strong>التنفيذية</strong></td><td>رئيس الجمهورية + مجلس الوزراء</td><td>تنفيذ القوانين، وضع السياسة العامة للدولة، حفظ الأمن، إدارة مؤسسات الدولة.</td></tr>
+          <tr><td><strong>القضائية</strong></td><td>المحاكم بمختلف درجاتها + مجلس القضاء الأعلى</td><td>الفصل في الخصومات، ضمان حقوق المواطنين، إرساء العدل، الرقابة على دستورية القوانين (المحكمة الدستورية).</td></tr>
+        </table>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-law')">📝 سؤال امتحاني: من يضمن استقلال القضاء؟ ▼</button>
+        <div class="reveal-box" id="rev-law">
+          <strong>الجواب النموذجي:</strong> يضمن رئيس الجمهورية استقلال السلطة القضائية يعاونه في ذلك مجلس القضاء الأعلى.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">4</div>
+      <div class="unit-info">
+        <h2>الوحدة الرابعة: قضايا معاصرة وعالمية</h2>
+        <div class="unit-meta"><span>🌐 العولمة</span><span>🕊️ المنظمات الدولية</span><span>⚠️ الإرهاب والتطرف</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: العولمة (Globalization)</h3>
+        <p>جعل العالم قرية صغيرة تتأثر أجزاؤها ببعضها بسرعة فائقة. لها وجهان:</p>
+        <ul>
+          <li><strong>الإيجابيات:</strong> سرعة نقل التكنولوجيا، التبادل الثقافي، سهولة التواصل، انفتاح الأسواق.</li>
+          <li><strong>السلبيات (المخاطر):</strong> تهميش الثقافات المحلية (الغزو الثقافي)، سيطرة الشركات الكبرى على اقتصادات الدول النامية، اتساع الفجوة بين الأغنياء والفقراء.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: الإرهاب والتطرف</h3>
+        <p>موضوع هام جداً ودائماً يأتي ضمن دراسة الحالة.</p>
+        <ul>
+          <li><strong>التطرف:</strong> هو الغلو والانغلاق الفكري ورفض الآخر (مرحلة فكرية).</li>
+          <li><strong>الإرهاب:</strong> هو الترجمة العملية للتطرف، باستخدام العنف والترهيب لتحقيق أهداف سياسية أو غيرها (مرحلة فعلية إجرامية).</li>
+          <li><strong>كيفية المواجهة (الحلول):</strong> نشر ثقافة الحوار والتسامح، محاربة الجهل والفقر، تعزيز دور المؤسسات التعليمية والدينية المعتدلة، تطبيق سيادة القانون.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="case-study" class="section">
+  <div class="unit-card open" id="u5">
+    <div class="unit-header">
+      <div class="unit-num">C</div>
+      <div class="unit-info">
+        <h2>هيكل دراسة الحالة (40 درجة)</h2>
+        <div class="unit-meta"><span>🧠 الاستنتاج</span><span>💡 اقتراح الحلول</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 كيف تتعامل مع سؤال دراسة الحالة؟</h3>
+        <p>يتم إعطاؤك نصاً يتحدث عن مشكلة (مثل: هجرة العقول، الفساد الإداري، التلوث البيئي، التطرف). وتأتي الأسئلة بالشكل التالي:</p>
+        <ol>
+          <li><strong>ضع عنواناً مناسباً للنص:</strong> اقرأ السطر الأول والأخير، الكلمة الأكثر تكراراً هي محور العنوان. (مثال: أثر الفساد على التنمية).</li>
+          <li><strong>استخرج من النص أسباب المشكلة:</strong> الإجابة موجودة حرفياً في النص، فقط قم بنسخها وترتيبها بنقاط.</li>
+          <li><strong>ما رأيك في الموقف كذا.. معللاً إجابتك:</strong> هنا يطلب منك إبداء رأي (أوافق / لا أوافق) ثم الربط بكلمات من المنهج. (أوافق، لأن ذلك يعزز الانتماء الوطني ويدعم سيادة القانون...).</li>
+          <li><strong>اقترح ثلاثة حلول للمشكلة:</strong> (أهم سؤال). <span class="highlight">احفظ هذه الحلول السحرية التي تناسب معظم المشاكل:</span>
+            <br>- تفعيل دور الإعلام في التوعية بمخاطر هذه المشكلة.
+            <br>- سن تشريعات وقوانين صارمة وتطبيقها بعدالة.
+            <br>- إدخال هذا المفهوم ضمن المناهج التعليمية لتوعية الأجيال القادمة.
+            <br>- تفعيل دور المجتمع المدني (الجمعيات) للمشاركة في الحل.
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:30px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🎭 محاكي المصطلحات الوطنية</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#64748b; font-size: 1.1rem;">اختر المصطلح ليقوم المحاكي بعرض تعريفه الدقيق المطلوب في ورقة الامتحان.</p>
+
+    <div class="sim-box">
+      <div class="sim-field">
+        <label>اختر المصطلح للتحليل:</label>
+        <select id="termSelect" onchange="analyzeTerm()">
+          <option value="" disabled selected>-- اضغط لاختيار مصطلح هام --</option>
+          <option value="1">المجتمع المدني</option>
+          <option value="2">الشفافية</option>
+          <option value="3">العولمة</option>
+          <option value="4">السيادة الوطنية</option>
+          <option value="5">الدستور</option>
+        </select>
+      </div>
+      
+      <div class="calc-result-box" id="term-result" style="display: none;">
+        <h3 style="color:var(--accent-light); margin-bottom:15px; font-size:1.4rem; font-family: 'Amiri', serif;" id="t-res-title"></h3>
+        <div style="font-size: 1.1rem; margin-bottom: 8px;" id="t-res-elements"></div>
+        <div style="font-size: 1.05rem; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border-right: 4px solid var(--accent-light); color: #e2e8f0; margin-top: 15px;" id="t-res-value"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة - بكالوريا وطنية 2026</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبر دقة حفظك للمفاهيم والقوانين في هذا النموذج المصغر:</p>
+    <div id="national-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// فتح وإغلاق الوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// كشف التلميحات
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  const isVisible = box.classList.contains('visible');
+  
+  if(boxId === 'rev-law') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الجواب ▲' : '📝 سؤال امتحاني: من يضمن استقلال القضاء؟ ▼';
+  }
+}
+
+// محاكي المصطلحات
+const termData = {
+  "1": {
+    text: "المجتمع المدني (Civil Society)",
+    elements: "مجموعة التنظيمات المستقلة نسبياً عن الدولة (نقابات، جمعيات، أندية) والتي تملأ الفضاء العام بين الأسرة والدولة.",
+    value: "أهميته: الرقابة على أداء الحكومة، الدفاع عن حقوق المواطنين، وتقديم خدمات تنموية وتوعوية."
+  },
+  "2": {
+    text: "الشفافية (Transparency)",
+    elements: "وضوح التشريعات والقوانين، وحق المواطن في الحصول على المعلومات التي تتعلق بالشأن العام والقرارات الحكومية.",
+    value: "أهميتها: هي العدو الأول للفساد، وتبني جسور الثقة بين المواطن ومؤسسات الدولة."
+  },
+  "3": {
+    text: "العولمة (Globalization)",
+    elements: "ظاهرة عالمية تعني اندماج أسواق العالم في حقل اقتصادي وثقافي واحد، وإزالة الحواجز بين الدول بفضل ثورة الاتصالات.",
+    value: "التحذير الامتحاني: يجب التفريق بين العولمة (الظاهرة العامة) وبين العولمة الاقتصادية (حرية انتقال رؤوس الأموال والسلع)."
+  },
+  "4": {
+    text: "السيادة الوطنية (National Sovereignty)",
+    elements: "حق الدولة في ممارسة سلطتها الكاملة على إقليمها الجغرافي وشعبها، واستقلال قرارها السياسي بعيداً عن أي تدخل خارجي.",
+    value: "أهميتها: هي الركن الأساسي لوجود الدولة المستقلة، ولا يمكن التنازل عنها تحت أي ظرف."
+  },
+  "5": {
+    text: "الدستور (Constitution)",
+    elements: "الوثيقة القانونية والسياسية العليا في الدولة، التي تحدد شكل الدولة، نظام الحكم، السلطات العامة، وحقوق المواطنين.",
+    value: "القاعدة: لا يجوز إصدار أي قانون عادي يتعارض مع نصوص الدستور، وتراقب ذلك (المحكمة الدستورية العليا)."
+  }
+};
+
+function analyzeTerm() {
+  const selection = document.getElementById('termSelect').value;
+  if (!selection) return;
+  
+  const data = termData[selection];
+  
+  document.getElementById('t-res-title').innerText = data.text;
+  document.getElementById('t-res-elements').innerHTML = `<strong style="color:#fbbf24;">التعريف الامتحاني:</strong><br>${data.elements}`;
+  document.getElementById('t-res-value').innerHTML = `<strong>ملاحظات داعمة:</strong><br>${data.value}`;
+  
+  document.getElementById('term-result').style.display = 'block';
+}
+
+// قاعدة بيانات الأسئلة المؤتمتة (الوطنية)
+const nationalQuizData = [
+  { q: "انتماء الفرد إلى المجتمع المدني (كالنقابات والجمعيات) هو انتماء:", opts: ["إجباري موروث", "طوعي إرادي", "عاطفي قبلي", "ديني بحت"], ans: 1 },
+  { q: "السلطة التي من مهامها الأساسية إقرار الموازنة العامة للدولة وحجب الثقة عن الحكومة هي:", opts: ["السلطة القضائية", "السلطة التنفيذية", "السلطة التشريعية", "السلطة المحلية"], ans: 2 },
+  { q: "الوضوح في التشريعات والقوانين وسهولة حصول المواطن على المعلومات المتعلقة بالقرارات الحكومية يسمى:", opts: ["المساءلة", "المركزية الإدارية", "التنمية المستدامة", "الشفافية"], ans: 3 },
+  { q: "من أهم مزايا المشروعات الصغيرة والمتوسطة:", opts: ["تحتاج لتقنيات معقدة جداً", "تحتاج لرؤوس أموال ضخمة", "تساهم في امتصاص البطالة بسرعة", "تزيد من الاعتماد على الاستيراد"], ans: 2 },
+  { q: "الفرق الأساسي بين التطرف والإرهاب هو أن الإرهاب:", opts: ["مرحلة فكرية فقط", "استخدام فعلي للعنف والترهيب", "انغلاق ثقافي", "رفض للآخر نظرياً"], ans: 1 }
+];
+
+function buildNationalQuiz() {
+  const container = document.getElementById('national-quiz-box');
+  container.innerHTML = '';
+  nationalQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">السؤال ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkNationalAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkNationalAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === nationalQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[nationalQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل المبدئي
+window.onload = function() {
+  buildNationalQuiz();
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇸🇾 الموسوعة التفاعلية في اللغة الفرنسية - سلسلة الذكي | بكالوريا 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1e3a8a; /* Navy Blue */
+    --primary-light: #3b82f6;
+    --primary-pale: #eff6ff;
+    --accent: #e11d48; /* Rose/Red */
+    --accent-light: #fb7185;
+    --accent-pale: #fff1f2;
+    --dark: #0f172a;
+    --text: #334155;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.9;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b82f6 100%);
+    color: white;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(225,29,72,0.15) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    font-family: 'Amiri', serif;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-top: 15px;
+    color: #bae6fd;
+    font-weight: 700;
+    position: relative;
+    letter-spacing: 1px;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.9rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.8); padding: 16px 20px; cursor: pointer;
+    font-size: 0.95rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: #bae6fd; border-bottom-color: #bae6fd; background: rgba(255,255,255,0.05);
+  }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 35px 15px; }
+  .section { display: none; animation: slideIn 0.4s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.04); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 6px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.9rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900; color: white; flex-shrink: 0; font-family: 'Amiri', serif;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(30, 58, 138, 0.3);
+  }
+  .unit-info h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 4px; color: var(--dark); }
+  .unit-meta { font-size: 0.88rem; color: #64748b; font-weight: 600; display: flex; gap: 12px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 30px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 25px; margin-bottom: 25px;
+    border-right: 4px solid var(--accent);
+  }
+  .lesson-block h3 { font-size: 1.2rem; font-weight: 800; color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;}
+  .lesson-block p { margin-bottom: 15px; font-weight: 600; color: #334155; text-align: justify; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 15px 0; font-weight: 600; color: #1e293b; }
+  .lesson-block li { margin-bottom: 12px; }
+
+  .highlight { color: var(--accent); font-weight: 800; }
+  .french-text { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; direction: ltr; display: inline-block; background: #e0e7ff; padding: 2px 8px; border-radius: 4px; color: #3730a3; font-weight: bold; margin: 0 5px;}
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.04); direction: ltr; text-align: left;
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 15px; font-weight: 800; }
+  .summary-table td { padding: 15px; border-bottom: 1px solid #f1f5f9; font-weight: 600; color: #1e293b;}
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 25px; margin: 20px 0; display: flex; gap: 18px; align-items: flex-start;}
+  .gold-tip .icon { font-size: 2.2rem; line-height: 1;}
+  .gold-tip .text { font-size: 1rem; color: #78350f; font-weight: 800; line-height: 1.8;}
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; border-radius: 14px; padding: 30px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-field { margin-bottom: 20px; }
+  .sim-field label { display: block; font-size: 1rem; color: #bae6fd; font-weight: bold; margin-bottom: 10px; }
+  .sim-field select { width: 100%; padding: 14px; border-radius: 8px; border: 2px solid var(--primary-light); font-size: 1.1rem; background: rgba(255,255,255,0.05); color: white; font-family: 'Amiri', serif; font-weight: bold; cursor: pointer; outline: none; }
+  .sim-field select option { background: var(--dark); color: white; }
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin-top: 25px; border-right: 5px solid var(--accent); direction: ltr; text-align: left;
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 30px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary); direction: ltr; text-align: left;
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.15rem; margin-bottom: 20px; color: var(--dark); font-family: 'Segoe UI', sans-serif;}
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; cursor: pointer;
+    font-family: 'Segoe UI', sans-serif; font-size: 1rem; text-align: left; transition: all 0.2s; font-weight: 700; color: var(--text);
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+  .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🇸🇾 Le Français Interactif</h1>
+  <div class="subtitle">سلسلة الذكي | البكالوريا العلمي السوري 2026</div>
+  <div class="badge-row">
+    <span class="badge">📖 Compréhension</span>
+    <span class="badge">⚙️ Grammaire</span>
+    <span class="badge">✍️ Expression</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 استراتيجية الـ 300 درجة</button>
+  <button class="nav-btn" onclick="showSection('grammaire')">⚙️ قواعد (Grammaire)</button>
+  <button class="nav-btn" onclick="showSection('vocabulaire')">📖 نصوص ومفردات</button>
+  <button class="nav-btn" onclick="showSection('expression')">✍️ التعبير الكتابي (الموضوع)</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🔄 محاكي القواعد والأزمنة</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الأتمتة</button>
+</nav>
+
+<div class="container">
+
+<!-- استراتيجية المادة -->
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 15px; text-align: center;">🎯 كيف تضمن الـ 300 درجة في اللغة الفرنسية؟</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569; margin-bottom: 20px;">الفرنسية تعتمد على تقنيات الحل أكثر من الحفظ الأعمى. الأسئلة تأتي بنظام الأتمتة (باستثناء الموضوع). إليك توزيع الورقة وكيفية السيطرة عليها:</p>
+    
+    <div style="overflow-x: auto; direction: rtl;">
+      <table class="summary-table" style="direction: rtl; text-align: right;">
+        <thead>
+          <tr>
+            <th style="text-align: right;">القسم الامتحاني</th>
+            <th style="text-align: right;">الوزن التقريبي</th>
+            <th style="text-align: right;">سر الحل</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>النص الموازي (Compréhension)</td><td>80 درجة</td><td>قراءة الأسئلة قبل النص للبحث عن الكلمات المفتاحية (Mots-clés).</td></tr>
+          <tr><td>المفردات (Vocabulaire)</td><td>40 درجة</td><td>حفظ المرادفات والأضداد من نهاية كل وحدة (Synonymes / Antonymes).</td></tr>
+          <tr><td>القواعد (Grammaire)</td><td>100 درجة</td><td>حفظ مؤشرات الزمن (Mots indicateurs) وقواعد التوافق العكسي.</td></tr>
+          <tr><td>التعبير الكتابي (Expression)</td><td>80 درجة</td><td>حفظ قالب جاهز لكل وحدة مع تغيير الحشوة فقط (مقدمة، عرض، خاتمة).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text" style="direction: rtl;">
+        <strong>القاعدة الذهبية في الأتمتة:</strong> في أسئلة القواعد، استخدم طريقة "الاستبعاد". انظر دائماً إلى الكلمة التي <u>تسبق الفراغ</u> والكلمة التي <u>تليه</u>. مثلاً، إذا وجدت حرف الجر <span class="french-text">de</span> فاحذف فوراً الخيارات التي تحتاج مفعولاً به مباشراً!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- القواعد -->
+<div id="grammaire" class="section">
+  
+  <div class="unit-card" id="g1">
+    <div class="unit-header" onclick="toggleUnit('g1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2 style="direction: ltr; text-align: right;">Le Discours Rapporté (الكلام المنقول)</h2>
+        <div class="unit-meta"><span>مؤكد في الامتحان</span><span>تغيير الأزمنة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3 style="direction: ltr; text-align: left;">📌 Règle Principale</h3>
+        <p>إذا كان فعل القول في الحاضر <span class="french-text">Il dit</span>، لا يتغير الزمن داخل الأقواس. أما إذا كان في الماضي <span class="french-text">Il a dit / Il disait</span>، تتغير الأزمنة كالتالي:</p>
+        <table class="summary-table">
+          <tr><th>Discours Direct (Direct)</th><th>Discours Indirect (Indirect)</th></tr>
+          <tr><td>Présent (حاضر)</td><td>Imparfait (ماضي ناقص)</td></tr>
+          <tr><td>Passé Composé (ماضي مركب)</td><td>Plus-que-parfait (ماضي تام)</td></tr>
+          <tr><td>Futur Simple (مستقبل بسيط)</td><td>Conditionnel Présent (شرط حاضر)</td></tr>
+          <tr><td>Impératif (أمر)</td><td>de + Infinitif (مصدر)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="g2">
+    <div class="unit-header" onclick="toggleUnit('g2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2 style="direction: ltr; text-align: right;">L'Expression de Cause et Conséquence (السبب والنتيجة)</h2>
+        <div class="unit-meta"><span>روابط منطقية</span><span>فهم المعنى</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block" style="direction: rtl;">
+        <h3>📌 أدوات السبب (La Cause)</h3>
+        <ul>
+          <li><span class="french-text">Parce que / Car</span> : تأتي في وسط الجملة، يتبعها جملة كاملة (فاعل + فعل).</li>
+          <li><span class="french-text">Comme / Puisque</span> : تأتي غالباً في <strong>أول الجملة</strong>.</li>
+          <li><span class="french-text">À cause de</span> : بسبب (لشيء سلبي)، يتبعها <strong>اسم</strong> وليس فعل.</li>
+          <li><span class="french-text">Grâce à</span> : بفضل (لشيء إيجابي)، يتبعها <strong>اسم</strong>.</li>
+        </ul>
+      </div>
+      <div class="lesson-block" style="direction: rtl;">
+        <h3>📌 أدوات النتيجة (La Conséquence)</h3>
+        <ul>
+          <li><span class="french-text">Donc / Alors / Par conséquent</span> : يتبعها جملة كاملة في صيغة الإخبار (Indicatif).</li>
+          <li><span class="french-text">Si bien que / De sorte que</span> : يتبعها (Indicatif) إذا كانت النتيجة محققة، و(Subjonctif) إذا كانت النتيجة مقصودة كهدف.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- النصوص والمفردات -->
+<div id="vocabulaire" class="section">
+  <div class="unit-card open" id="v1">
+    <div class="unit-header">
+      <div class="unit-num">V</div>
+      <div class="unit-info">
+        <h2>أهم مفردات الوحدات (Mots-Clés)</h2>
+        <div class="unit-meta"><span>لحل النص الموازي</span><span>توسيع الرصيد</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block" style="direction: rtl;">
+        <h3>📌 Unité 1: La Solidarité (التضامن)</h3>
+        <p>تتحدث عن الأعمال الخيرية، التطوع، ومساعدة المحتاجين.</p>
+        <ul style="direction: ltr; text-align: left;">
+          <li><strong>Le bénévolat:</strong> العمل التطوعي (non rémunéré).</li>
+          <li><strong>Soutenir / Aider:</strong> يدعم / يساعد.</li>
+          <li><strong>Les démunis:</strong> المحتاجين / الفقراء (= les pauvres).</li>
+          <li><strong>Une association caritative:</strong> جمعية خيرية.</li>
+        </ul>
+      </div>
+      <div class="lesson-block" style="direction: rtl;">
+        <h3>📌 Unité 2: La Technologie (التكنولوجيا)</h3>
+        <p>تتحدث عن تأثير التكنولوجيا، الذكاء الاصطناعي، والإنترنت.</p>
+        <ul style="direction: ltr; text-align: left;">
+          <li><strong>L'intelligence artificielle (IA):</strong> الذكاء الاصطناعي.</li>
+          <li><strong>Les réseaux sociaux:</strong> وسائل التواصل الاجتماعي.</li>
+          <li><strong>Un outil indispensable:</strong> أداة لا غنى عنها.</li>
+          <li><strong>Les effets néfastes:</strong> الآثار السلبية (= négatifs).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- التعبير الكتابي -->
+<div id="expression" class="section">
+  <div class="unit-card open" id="e1">
+    <div class="unit-header">
+      <div class="unit-num">W</div>
+      <div class="unit-info">
+        <h2>قالب الموضوع المضمون (Le Sujet)</h2>
+        <div class="unit-meta"><span>هيكلية جاهزة</span><span>حفظ الروابط</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block" style="direction: rtl;">
+        <h3>📌 هيكلية المقال / الرسالة (80 درجة)</h3>
+        <p>لكتابة موضوع متماسك (Article / Essai)، احفظ هذه الروابط المنطقية التي تعطي انطباعاً ممتازاً للمصحح، وضع بينها أفكار الوحدة المطلوبة:</p>
+        <div style="direction: ltr; text-align: left; background: #f8fafc; padding: 20px; border-left: 4px solid var(--primary); border-radius: 8px;">
+          <p><strong>[L'introduction - المقدمة]</strong></p>
+          <p>De nos jours, on parle beaucoup de <span style="color:var(--accent);">[اكتب اسم المشكلة/الموضوع هنا]</span>. Il est indéniable que ce phénomène joue un rôle majeur dans notre société.</p>
+          
+          <p><strong>[Le développement - العرض]</strong></p>
+          <p>D'abord, il faut savoir que <span style="color:var(--accent);">[الفكرة الأولى]</span>. Ensuite, on peut ajouter que <span style="color:var(--accent);">[الفكرة الثانية]</span>. De plus, il ne faut pas oublier que <span style="color:var(--accent);">[الفكرة الثالثة أو الحل]</span>.</p>
+          
+          <p><strong>[La conclusion - الخاتمة]</strong></p>
+          <p>En conclusion, pour résoudre ce problème, il est nécessaire de travailler ensemble pour un avenir meilleur.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- المحاكي -->
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:30px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🔄 محاكي القواعد والأزمنة (Simulateur)</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#64748b; font-size: 1.1rem; direction: rtl;">اختر القاعدة ليقوم المحاكي بعرض الكلمات الدلالية وطريقة تشكيل الزمن فوراً.</p>
+
+    <div class="sim-box" style="direction: rtl;">
+      <div class="sim-field">
+        <label>Sélectionnez la règle (اختر القاعدة):</label>
+        <select id="gramSelect" onchange="analyzeGrammar()">
+          <option value="" disabled selected>-- Choisissez une règle --</option>
+          <option value="1">Le Passé Composé (الماضي المركب)</option>
+          <option value="2">L'Imparfait (الماضي الناقص)</option>
+          <option value="3">Le Conditionnel Présent (الشرط الحاضر)</option>
+          <option value="4">Le Subjonctif (المنصوب/الشك)</option>
+        </select>
+      </div>
+      
+      <div class="calc-result-box" id="gram-result" style="display: none;">
+        <h3 style="color:var(--accent-light); margin-bottom:15px; font-size:1.4rem; font-family: 'Segoe UI', sans-serif;" id="g-res-title"></h3>
+        <div style="font-size: 1.1rem; margin-bottom: 8px;" id="g-res-elements"></div>
+        <div style="font-size: 1.05rem; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-light); color: #e2e8f0; margin-top: 15px;" id="g-res-value"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- الأتمتة -->
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center; font-family: 'Amiri', serif;">✅ QCM: Testez-vous !</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569; direction: rtl;">تدرب على نمط أسئلة الأتمتة في الامتحان النهائي:</p>
+    <div id="french-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// محاكي القواعد
+const gramData = {
+  "1": {
+    text: "Le Passé Composé",
+    elements: "<strong style='color:#fbbf24;'>Mots-clés (الكلمات الدلالية):</strong> Hier, l'année passée, soudain, un jour.<br><strong style='color:#fbbf24;'>Formation:</strong> Être ou Avoir au présent + Participe passé.",
+    value: "Astuce: Utilisez 'Être' avec les 14 verbes de mouvement (aller, venir, etc.) et les verbes pronominaux (se laver)."
+  },
+  "2": {
+    text: "L'Imparfait",
+    elements: "<strong style='color:#fbbf24;'>Mots-clés (الكلمات الدلالية):</strong> Autrefois, chaque jour, d'habitude, pendant que.<br><strong style='color:#fbbf24;'>Formation:</strong> Radical de 'Nous' au présent + terminaisons (ais, ais, ait, ions, iez, aient).",
+    value: "Astuce: Sert à exprimer une description dans le passé, ou une habitude."
+  },
+  "3": {
+    text: "Le Conditionnel Présent",
+    elements: "<strong style='color:#fbbf24;'>Condition (Si):</strong> Si + Imparfait ➔ Conditionnel Présent.<br><strong style='color:#fbbf24;'>Formation:</strong> Radical du futur + terminaisons de l'imparfait.",
+    value: "Exemple: Si j'avais de l'argent, j'<strong>achèterais</strong> une voiture."
+  },
+  "4": {
+    text: "Le Subjonctif Présent",
+    elements: "<strong style='color:#fbbf24;'>Mots-clés:</strong> Il faut que, je veux que, bien que, pour que.<br><strong style='color:#fbbf24;'>Formation:</strong> Radical de 'Ils' au présent + (e, es, e, ions, iez, ent).",
+    value: "Attention aux verbes irréguliers: Être (sois), Avoir (aie), Faire (fasse), Aller (aille)."
+  }
+};
+
+function analyzeGrammar() {
+  const selection = document.getElementById('gramSelect').value;
+  if (!selection) return;
+  const data = gramData[selection];
+  document.getElementById('g-res-title').innerText = data.text;
+  document.getElementById('g-res-elements').innerHTML = data.elements;
+  document.getElementById('g-res-value').innerHTML = data.value;
+  document.getElementById('gram-result').style.display = 'block';
+}
+
+// بنك الأسئلة بالفرنسية
+const frenchQuizData = [
+  { q: "Il n'est pas venu à la fête ........ sa maladie.", opts: ["parce que", "à cause de", "grâce à", "donc"], ans: 1 },
+  { q: "Si tu étudiais bien, tu ........ à l'examen.", opts: ["réussiras", "réussis", "réussirais", "a réussi"], ans: 2 },
+  { q: "Il dit : « Je suis fatigué ». ➔ Il dit qu'il ........ fatigué.", opts: ["est", "était", "sera", "serait"], ans: 0 },
+  { q: "Je veux que tu ........ tes devoirs maintenant.", opts: ["fais", "fasses", "fera", "faisais"], ans: 1 },
+  { q: "Le contraire (antonyme) de mot 'Avantage' est :", opts: ["Inconvénient", "Bienfait", "Bénéfice", "Qualité"], ans: 0 }
+];
+
+function buildFrenchQuiz() {
+  const container = document.getElementById('french-quiz-box');
+  container.innerHTML = '';
+  frenchQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">Q${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkFrenchAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkFrenchAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === frenchQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[frenchQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+window.onload = function() {
+  buildFrenchQuiz();
+};
+</script>
+</body>
+</html>

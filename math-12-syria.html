@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>♾️ الموسوعة التفاعلية في الرياضيات - سلسلة الذكي | بكالوريا علمي 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }
+  };
+</script>
+<style>
+  :root {
+    --primary: #4f46e5; /* Indigo */
+    --primary-light: #818cf8;
+    --primary-pale: #eef2ff;
+    --accent: #f43f5e; /* Rose */
+    --accent-light: #fb7185;
+    --accent-pale: #fff1f2;
+    --dark: #1e1b4b;
+    --text: #334155;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #4f46e5 50%, #6366f1 100%);
+    color: white;
+    padding: 50px 20px 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(244,63,94,0.15) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 900;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    margin-top: 12px;
+    color: var(--primary-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.88rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.75); padding: 16px 20px; cursor: pointer;
+    font-size: 0.95rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--primary-light); border-bottom-color: var(--primary-light); background: rgba(255,255,255,0.03);
+  }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 15px; }
+  .section { display: none; animation: slideIn 0.35s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.03); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 5px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.85rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: white; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+  }
+  .unit-info h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; color: #312e81; }
+  .unit-meta { font-size: 0.85rem; color: #64748b; font-weight: 600; display: flex; gap: 10px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 25px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 25px; margin-bottom: 20px;
+    border-right: 4px solid var(--accent-light);
+  }
+  .lesson-block h3 { font-size: 1.15rem; font-weight: 800; color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 2px dashed #cbd5e1; padding-bottom: 10px;}
+  .lesson-block p { margin-bottom: 12px; font-weight: 600; color: #475569; text-align: justify; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 15px 0; font-weight: 600; color: #334155;}
+  .lesson-block li { margin-bottom: 12px; }
+  
+  .math-box {
+    background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; margin: 15px 0; font-family: monospace; font-size: 1.1rem; overflow-x: auto; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 14px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 12px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; border-right: 1px solid #f1f5f9;}
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: white; border: none; border-radius: 8px; padding: 10px 22px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 800; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(244, 63, 94, 0.4); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 20px; margin: 15px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 700; color: #881337;
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; border-radius: 14px; padding: 30px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; align-items: flex-end; justify-content: center;}
+  .sim-field { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 150px; max-width: 200px;}
+  .sim-field label { font-size: 0.95rem; color: var(--primary-light); font-weight: bold; text-align: center;}
+  .sim-field input { padding: 12px; border-radius: 8px; border: 2px solid var(--primary-light); font-size: 1.1rem; background: rgba(255,255,255,0.1); color: white; font-family: 'Poppins', sans-serif; font-weight: bold; text-align: center; outline: none;}
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.08); padding: 25px; border-radius: 12px; margin-top: 25px; border-right: 5px solid var(--accent-light); text-align: center;
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 30px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.15rem; margin-bottom: 20px; color: var(--dark); direction: rtl;}
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 1rem; text-align: right; transition: all 0.2s; font-weight: 700; color: var(--text); direction: ltr; display: flex; justify-content: flex-end;
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+  .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 20px; margin: 20px 0; display: flex; gap: 15px; align-items: center;}
+  .gold-tip .icon { font-size: 2rem; }
+  .gold-tip .text { font-size: 1rem; color: #78350f; font-weight: 800; line-height: 1.6;}
+
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>♾️ الموسوعة التفاعلية في الرياضيات</h1>
+  <div class="subtitle">سلسلة الذكي | البكالوريا العلمي السوري 2026 المطوّر</div>
+  <div class="badge-row">
+    <span class="badge">📈 التحليل الرياضي</span>
+    <span class="badge">📐 الهندسة الفراغية</span>
+    <span class="badge">✖️ الجبر والعقدية</span>
+    <span class="badge">🎲 الاحتمالات</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 خريطة الـ 600 درجة</button>
+  <button class="nav-btn" onclick="showSection('analysis')">📈 الجزء الأول: التحليل</button>
+  <button class="nav-btn" onclick="showSection('algebra')">📐 الجزء الثاني: الجبر والهندسة</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🧮 المحاكي العقدي</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الأتمتة</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 15px; text-align: center;">🎯 استراتيجية السيطرة على ورقة الرياضيات (600 درجة)</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569; margin-bottom: 20px;">الرياضيات هي عصب الفرع العلمي. ورقة الامتحان مقسمة إلى أسئلة اختيارية، تمارين (غالباً 4 تمارين)، ومسألتين شاملتين (كل مسألة بـ 100 درجة). السر يكمن في دقة الخطوات وليس فقط الجواب النهائي.</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>القسم</th>
+            <th>الوزن الامتحاني التقريبي</th>
+            <th>مفاتيح الحل والتركيز الامتحاني</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>مسألة التحليل (100 درجة)</td><td>عالي جداً</td><td>دراسة التغيرات، رسم الخط البياني، إيجاد المقاربات، حساب المساحات (التكامل)، والمماسات.</td></tr>
+          <tr><td>مسألة الهندسة الفراغية (100 درجة)</td><td>عالي جداً</td><td>إثبات ارتباط خطي، معادلة مستوي، التقاطع، حساب حجوم (الجداء السلمي والشعاعي).</td></tr>
+          <tr><td>الأعداد العقدية</td><td>متوسط (تمرين 75 درجة)</td><td>حل معادلات من الدرجة الثانية، الشكل الأسي والمثلثي، تطبيقات هندسية للعقدية.</td></tr>
+          <tr><td>الاحتمالات</td><td>متوسط (تمرين 75 درجة)</td><td>المتحول العشوائي، التوقع الرياضي، السحب مع/دون إعادات، الاحتمال الشرطي.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>القاعدة الذهبية في الرياضيات:</strong> المصحح في سوريا يبحث عن الخطوات المنطقية. في دراسة التغيرات، لا تنسَ كتابة جملة "التابع مستمر واشتقاقي على المجال...". في الهندسة، اكتب القانون قبل التعويض العددي.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="analysis" class="section">
+  
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: النهايات، الاستمرار، والاشتقاق</h2>
+        <div class="unit-meta"><span>♾️ إزالة حالات عدم التعيين</span><span>📉 المقاربات</span><span>⚙️ قواعد الاشتقاق</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدرس الأول: النهايات والمقاربات (Limits & Asymptotes)</h3>
+        <p>النهايات هي المفتاح الأساسي لفهم سلوك التابع عند الأطراف المفتوحة لمجموعة التعريف.</p>
+        <ul>
+          <li><strong>حالات عدم التعيين الأربع الشهيرة:</strong> $\frac{0}{0}$ ، $\frac{\infty}{\infty}$ ، $\infty - \infty$ ، $0 \times \infty$.</li>
+          <li><strong>طرق إزالة عدم التعيين:</strong> التحليل لعوامل، الضرب بالمرافق (للجذور)، إخراج العامل المشترك بأعلى أس، أو استخدام قاعدة لوبيتال (L'Hôpital) للتحقق.</li>
+          <li><strong>المقاربات (Asymptotes):</strong>
+            <ul>
+              <li><strong>مقارب شاقولي:</strong> إذا كانت $\lim_{x \to a} f(x) = \pm \infty$ فإن $x = a$ مقارب شاقولي.</li>
+              <li><strong>مقارب أفقي:</strong> إذا كانت $\lim_{x \to \pm \infty} f(x) = b$ فإن $y = b$ مقارب أفقي.</li>
+              <li><strong>مقارب مائل:</strong> معادلته $y = ax + b$. نثبته إذا تحقق $\lim_{x \to \pm \infty} [f(x) - (ax + b)] = 0$.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="lesson-block">
+        <h3>📌 الدرس الثاني: الاشتقاق ودراسة التغيرات (Derivatives & Variations)</h3>
+        <p>هذا الدرس هو عصب مسألة الـ 100 درجة الأولى. يجب حفظ قواعد الاشتقاق الأساسية كاسمك.</p>
+        <div class="math-box">
+          مشتق الجداء: $(u \cdot v)' = u'v + uv'$<br>
+          مشتق الكسر: $\left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2}$<br>
+          مشتق التابع المركب: $(f(g(x)))' = g'(x) \cdot f'(g(x))$
+        </div>
+        <p><strong>خطوات دراسة تغيرات تابع $f(x)$ المعتمدة:</strong></p>
+        <ol>
+          <li>تحديد مجموعة التعريف $D_f$ وكتابتها على شكل مجالات.</li>
+          <li>حساب النهايات عند أطراف المجالات المفتوحة، وتحديد المقاربات.</li>
+          <li>إيجاد المشتق الأول $f'(x)$، وإعدامه لمعرفة النقاط الحرجة.</li>
+          <li>دراسة إشارة المشتق لمعرفة جهة الاطراد (متزايد/متناقص).</li>
+          <li>تنظيم جدول التغيرات، وتحديد القيم الحدية (الكبرى والصغرى محلياً).</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: التوابع المألوفة والتكامل</h2>
+        <div class="unit-meta"><span>📈 التابع الأسي</span><span>📉 التابع اللوغاريتمي</span><span>∫ حساب المساحات</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 التابع الأسي واللوغاريتمي</h3>
+        <p>التابع الأسي $f(x) = e^x$ واللوغاريتمي $f(x) = \ln(x)$ هما تابعان متعاكسان، ولا يخلو امتحان منهما.</p>
+        <ul>
+          <li><strong>التابع اللوغاريتمي النيبري $\ln(x)$:</strong> معرف على المجال $]0, +\infty[$. مشتقهُ: $(\ln(u))' = \frac{u'}{u}$. نهايته عند الصفر تسعى لـ $-\infty$.</li>
+          <li><strong>التابع الأسي النيبري $e^x$:</strong> معرف على $\mathbb{R}$. مشتقهُ: $(e^u)' = u' \cdot e^u$. نهايته عند $-\infty$ تسعى لـ $0$.</li>
+        </ul>
+      </div>
+      
+      <div class="lesson-block">
+        <h3>📌 التكامل المحدد وحساب المساحات (Integration)</h3>
+        <p>التكامل هو العملية المعاكسة للاشتقاق. لحساب مساحة محصورة بين خط بياني $C_f$ ومحور الفواصل $Ox$ على المجال $[a,b]$:</p>
+        <div class="math-box">
+          $A = \int_{a}^{b} |f(x)| \,dx$
+        </div>
+        <p>إذا كان الخط البياني فوق محور الفواصل نأخذ التابع كما هو، وإذا كان تحته نضربه بـ (سالب).</p>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-calc')">📝 فخ امتحاني في التكامل! ▼</button>
+        <div class="reveal-box" id="rev-calc">
+          <strong>احذر!</strong> عند استخدام طريقة "التكامل بالتجزئة" $\int u \, dv = u \cdot v - \int v \, du$، تذكر دائماً قاعدة (LATE) لاختيار $u$:<br>
+          اللوغاريتم (L) يُفضل على كثير الحدود (A)، وكثير الحدود (A) يُفضل على المثلثي (T) والأسي (E).
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="algebra" class="section">
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: الأشعة والهندسة الفراغية</h2>
+        <div class="unit-meta"><span>📐 الجداء السلمي</span><span>📏 معادلة المستوي</span><span>球 الفلكة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الجداء السلمي والشعاعي (Dot & Cross Product)</h3>
+        <ul>
+          <li><strong>الارتباط الخطي لـ 3 أشعة:</strong> لتثبت أن 3 أشعة تقع في مستوٍ واحد، يجب أن تحقق العلاقة: $\vec{w} = \alpha\vec{u} + \beta\vec{v}$.</li>
+          <li><strong>الجداء السلمي:</strong> $\vec{u} \cdot \vec{v} = x_1x_2 + y_1y_2 + z_1z_2$. إذا كان الناتج صفراً، فالشعاعان متعامدان.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 معادلة المستوي (Plane Equation)</h3>
+        <p>لكتابة معادلة مستوٍ تحتاج إلى شيئين أساسيين: نقطة يمر منها $A(x_0, y_0, z_0)$، وشعاع ناظم عليه $\vec{n}(a, b, c)$ (عمودي عليه).</p>
+        <div class="math-box">
+          $a(x - x_0) + b(y - y_0) + c(z - z_0) = 0$
+        </div>
+        <p>من أهم الطلبات الامتحانية: إثبات أن مستقيم يعامد مستوي، هنا يجب إثبات أن شعاع توجيه المستقيم مرتبط خطياً مع الناظم على المستوي.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">4</div>
+      <div class="unit-info">
+        <h2>الوحدة الرابعة: الأعداد العقدية (Complex Numbers)</h2>
+        <div class="unit-meta"><span>✖️ الشكل الجبري</span><span>🔄 الشكل المثلثي والأسي</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 أشكال العدد العقدي وتحويلاته</h3>
+        <p>العدد العقدي هو توسيع لمجموعة الأعداد الحقيقية بإضافة الوحدة التخيلية $i$ حيث $i^2 = -1$.</p>
+        <ul>
+          <li><strong>الشكل الجبري:</strong> $z = x + iy$ (حيث $x$ القسم الحقيقي، و $y$ القسم التخيلي).</li>
+          <li><strong>الطويلة (Modulus):</strong> نرمز لها $r$ أو $|z|$ وتحسب بالعلاقة: $r = \sqrt{x^2 + y^2}$.</li>
+          <li><strong>الزاوية (Argument):</strong> نرمز لها $\theta$. وتُحسب من: $\cos\theta = \frac{x}{r}$ و $\sin\theta = \frac{y}{r}$.</li>
+          <li><strong>الشكل المثلثي:</strong> $z = r(\cos\theta + i\sin\theta)$.</li>
+          <li><strong>الشكل الأسي:</strong> $z = r \cdot e^{i\theta}$.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:30px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🧮 المحاكي العقدي الذكي: تحويل الأشكال</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#64748b; font-size: 1.1rem;">أدخل القسم الحقيقي (x) والقسم التخيلي (y) للعدد العقدي بالشكل الجبري $z = x + iy$ ليقوم المحاكي بحساب الطويلة، الزاوية، وكتابة الشكل الأسي والمثلثي فوراً.</p>
+
+    <div class="sim-box">
+      <div class="sim-row" style="direction: ltr;">
+        <div class="sim-field">
+          <label>Real Part (x)</label>
+          <input type="number" id="realPart" value="1" step="any">
+        </div>
+        <div style="color: white; font-size: 2rem; padding-bottom: 10px;">$+$</div>
+        <div class="sim-field">
+          <label>Imaginary Part (y)</label>
+          <input type="number" id="imagPart" value="1" step="any">
+        </div>
+        <div style="color: white; font-size: 2rem; padding-bottom: 10px;">$i$</div>
+      </div>
+      
+      <div style="text-align: center;">
+        <button class="interactive-btn" onclick="calculateComplex()" style="font-size: 1.1rem; padding: 12px 30px;">⚙️ احسب الطويلة والزاوية</button>
+      </div>
+
+      <div class="calc-result-box" id="complex-result" style="display: none; direction: ltr;">
+        <h3 style="color:var(--primary-light); margin-bottom:15px; font-size:1.4rem;">Results</h3>
+        <div style="font-size: 1.2rem; margin-bottom: 10px;" id="res-modulus"></div>
+        <div style="font-size: 1.2rem; margin-bottom: 10px;" id="res-angle"></div>
+        <hr style="border: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+        <div style="font-size: 1.3rem; margin-bottom: 10px; font-weight: bold; color: #fb7185;" id="res-exponential"></div>
+        <div style="font-size: 1.3rem; font-weight: bold; color: #818cf8;" id="res-trig"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة - بكالوريا رياضيات 2026</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبر مهارتك وسرعتك في الحل من خلال هذا النموذج الوزاري:</p>
+    <div id="math-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+  // Re-render MathJax if navigating
+  if(window.MathJax) { MathJax.typesetPromise(); }
+}
+
+// فتح وإغلاق الوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// كشف التلميحات
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  const isVisible = box.classList.contains('visible');
+  
+  if(boxId === 'rev-calc') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الفخ ▲' : '📝 فخ امتحاني في التكامل! ▼';
+  }
+}
+
+// محاكي الأعداد العقدية
+function calculateComplex() {
+  const x = parseFloat(document.getElementById('realPart').value) || 0;
+  const y = parseFloat(document.getElementById('imagPart').value) || 0;
+  
+  // Modulus
+  const r = Math.sqrt(x*x + y*y);
+  
+  // Angle in radians and degrees
+  let theta = Math.atan2(y, x);
+  let thetaDeg = (theta * 180) / Math.PI;
+  
+  // Format fractions of Pi for common angles
+  let piFraction = "";
+  let eps = 0.01;
+  if(Math.abs(thetaDeg - 0) < eps) piFraction = "0";
+  else if(Math.abs(thetaDeg - 30) < eps) piFraction = "\\frac{\\pi}{6}";
+  else if(Math.abs(thetaDeg - 45) < eps) piFraction = "\\frac{\\pi}{4}";
+  else if(Math.abs(thetaDeg - 60) < eps) piFraction = "\\frac{\\pi}{3}";
+  else if(Math.abs(thetaDeg - 90) < eps) piFraction = "\\frac{\\pi}{2}";
+  else if(Math.abs(thetaDeg - 120) < eps) piFraction = "\\frac{2\\pi}{3}";
+  else if(Math.abs(thetaDeg - 135) < eps) piFraction = "\\frac{3\\pi}{4}";
+  else if(Math.abs(thetaDeg - 150) < eps) piFraction = "\\frac{5\\pi}{6}";
+  else if(Math.abs(Math.abs(thetaDeg) - 180) < eps) piFraction = "\\pi";
+  else if(Math.abs(thetaDeg - (-90)) < eps) piFraction = "-\\frac{\\pi}{2}";
+  else if(Math.abs(thetaDeg - (-45)) < eps) piFraction = "-\\frac{\\pi}{4}";
+  else piFraction = theta.toFixed(2) + " \\text{ rad}"; // Fallback
+  
+  const rStr = Number.isInteger(r) ? r.toString() : r.toFixed(2);
+
+  document.getElementById('res-modulus').innerHTML = `Modulus $r = |z| = \\sqrt{${x}^2 + ${y}^2} = ${rStr}$`;
+  document.getElementById('res-angle').innerHTML = `Argument $\\theta = ${piFraction}$`;
+  
+  document.getElementById('res-exponential').innerHTML = `Exponential Form: $z = ${rStr} \\cdot e^{i(${piFraction})}$`;
+  document.getElementById('res-trig').innerHTML = `Trigonometric Form: $z = ${rStr} \\left[\\cos(${piFraction}) + i\\sin(${piFraction})\\right]$`;
+  
+  document.getElementById('complex-result').style.display = 'block';
+  
+  // Reprocess MathJax dynamically
+  if(window.MathJax) { MathJax.typesetPromise(); }
+}
+
+// قاعدة بيانات الأسئلة المؤتمتة (رياضيات)
+const mathQuizData = [
+  { q: "ما هي نهاية التابع $f(x) = \\frac{\\sin x}{x}$ عندما تسعى $x$ نحو الصفر؟", opts: ["$0$", "$\\infty$", "$1$", "غير موجودة"], ans: 2 },
+  { q: "مشتق التابع $f(x) = e^{2x+1}$ هو:", opts: ["$e^{2x+1}$", "$2e^{2x+1}$", "$(2x+1)e^{2x}$", "$0$"], ans: 1 },
+  { q: "الطويلة للعدد العقدي $z = 3 - 4i$ تساوي:", opts: ["$1$", "$5$", "$-1$", "$25$"], ans: 1 },
+  { q: "إذا كان التابع الأصلي هو $f(x) = 2x$، فإن تكامله المحدد $\\int_0^2 2x \\, dx$ يساوي:", opts: ["$2$", "$4$", "$8$", "$0$"], ans: 1 },
+  { q: "الشعاع الناظم على المستوي $2x - y + 3z - 5 = 0$ هو:", opts: ["$\\vec{n}(2, 1, 3)$", "$\\vec{n}(-2, 1, -3)$", "$\\vec{n}(2, -1, 3)$", "$\\vec{n}(2, -1, -5)$"], ans: 2 }
+];
+
+function buildMathQuiz() {
+  const container = document.getElementById('math-quiz-box');
+  container.innerHTML = '';
+  mathQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">السؤال ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkMathAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkMathAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === mathQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[mathQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل المبدئي
+window.onload = function() {
+  buildMathQuiz();
+};
+</script>
+</body>
+</html>

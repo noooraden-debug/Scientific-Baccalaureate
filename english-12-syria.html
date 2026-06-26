@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 الموسوعة التفاعلية في اللغة الإنجليزية - سلسلة الذكي | بكالوريا علمي 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1e3a8a; /* Deep Blue for English */
+    --primary-light: #2563eb;
+    --primary-pale: #eff6ff;
+    --accent: #f59e0b; /* Golden Amber */
+    --accent-light: #fbbf24;
+    --accent-pale: #fffbeb;
+    --dark: #0f172a;
+    --text: #1e293b;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.9;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1d4ed8 100%);
+    color: white;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245,158,11,0.15) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    font-family: 'Amiri', serif;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-top: 15px;
+    color: var(--accent-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(245,158,11,0.4);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.9rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.8); padding: 16px 20px; cursor: pointer;
+    font-size: 0.95rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--accent-light); border-bottom-color: var(--accent-light); background: rgba(255,255,255,0.05);
+  }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 35px 15px; }
+  .section { display: none; animation: slideIn 0.4s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.04); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 6px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.9rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900; color: white; flex-shrink: 0; font-family: 'Amiri', serif;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(30, 58, 138, 0.3);
+  }
+  .unit-info h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 4px; color: var(--dark); }
+  .unit-meta { font-size: 0.88rem; color: #64748b; font-weight: 600; display: flex; gap: 12px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 30px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 25px; margin-bottom: 25px;
+    border-right: 4px solid var(--accent);
+  }
+  .lesson-block h3 { font-size: 1.2rem; font-weight: 800; color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;}
+  .lesson-block p { margin-bottom: 15px; font-weight: 600; color: #334155; text-align: justify; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 15px 0; font-weight: 600; color: #1e293b; }
+  .lesson-block li { margin-bottom: 12px; }
+
+  .english-text {
+    background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; padding: 20px; margin: 15px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 1.15rem; text-align: left; color: var(--dark); line-height: 1.8; direction: ltr;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+  }
+
+  .highlight { color: var(--primary-light); font-weight: 800; }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 15px; font-weight: 800; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); }
+  .summary-table td { padding: 15px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; border-right: 1px solid #f1f5f9; direction: rtl;}
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), #d97706);
+    color: white; border: none; border-radius: 8px; padding: 12px 25px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 800; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 20px; margin: 15px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 700; color: var(--dark); border-right: 6px solid var(--accent);
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX */
+  .sim-box { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; border-radius: 14px; padding: 30px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-field { margin-bottom: 20px; }
+  .sim-field label { display: block; font-size: 1rem; color: var(--accent-light); font-weight: bold; margin-bottom: 10px; }
+  .sim-field select { width: 100%; padding: 14px; border-radius: 8px; border: 2px solid var(--accent); font-size: 1.1rem; background: rgba(255,255,255,0.05); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; cursor: pointer; outline: none; direction: ltr; }
+  .sim-field select option { background: var(--dark); color: white; }
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin-top: 25px; border-right: 5px solid var(--accent-light);
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 30px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.15rem; margin-bottom: 20px; color: var(--dark); direction: ltr; text-align: left; font-family: 'Segoe UI', sans-serif;}
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; direction: ltr;}
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; cursor: pointer;
+    font-family: 'Segoe UI', sans-serif; font-size: 1rem; text-align: left; transition: all 0.2s; font-weight: 700; color: var(--text);
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+  .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 25px; margin: 20px 0; display: flex; gap: 18px; align-items: flex-start;}
+  .gold-tip .icon { font-size: 2.2rem; line-height: 1;}
+  .gold-tip .text { font-size: 1rem; color: #78350f; font-weight: 800; line-height: 1.8;}
+
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🌍 الموسوعة التفاعلية في اللغة الإنجليزية</h1>
+  <div class="subtitle">سلسلة الذكي | البكالوريا العلمي السوري 2026 (Emar 12)</div>
+  <div class="badge-row">
+    <span class="badge">📖 النصوص والمفردات</span>
+    <span class="badge">✒️ القواعد النحوية</span>
+    <span class="badge">📝 الترجمة والمواضيع</span>
+    <span class="badge">🔄 الاشتقاقات والمفقودات</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 خريطة الـ 300 درجة</button>
+  <button class="nav-btn" onclick="showSection('units')">📖 الوحدات والنصوص</button>
+  <button class="nav-btn" onclick="showSection('grammar')">✒️ القواعد (Grammar)</button>
+  <button class="nav-btn" onclick="showSection('writing')">📝 الترجمة والموضوع</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🎭 محاكي القواعد</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الأتمتة</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 15px; text-align: center;">🎯 استراتيجية السيطرة على ورقة اللغة الإنجليزية (300 درجة للعلمي)</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569; margin-bottom: 20px;">اللغة الإنجليزية تعتمد على الربط بين المفردات والقواعد. الامتحان يقيس فهمك للنصوص المقررة والموازية، دقة حفظك للقواعد والاشتقاقات، ومهارتك في التعبير الكتابي.</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>القسم الامتحاني</th>
+            <th>الوزن التقريبي</th>
+            <th>التركيز المطلوب والمفاتيح</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>أولاً: قراءة النصوص (Reading)</td><td>80 درجة</td><td>نص من الكتاب (Student Book) ونص موازي خارجي، استخراج الفكرة العامة، والإجابة عن الأسئلة (T/F).</td></tr>
+          <tr><td>ثانياً: المفردات (Vocabulary)</td><td>40 درجة</td><td>توصيل الكلمات بمعانيها (Definitions)، الكلمات المركبة، والأحرف الجر الملازمة (Phrasal Verbs).</td></tr>
+          <tr><td>ثالثاً: القواعد (Grammar & Derivations)</td><td>90 درجة</td><td>اختيار الزمن الصحيح، تصحيح الفعل، تحويل الجمل للمبني للمجهول أو الكلام المنقول، والاشتقاقات (Noun, Verb, Adj).</td></tr>
+          <tr><td>رابعاً: الترجمة (Translation)</td><td>40 درجة</td><td>ترجمة جملتين من الإنجليزية للعربية، وجملتين من العربية للإنجليزية (من نصوص الكتاب حصراً).</td></tr>
+          <tr><td>خامساً: الموضوع (Writing)</td><td>50 درجة</td><td>كتابة موضوع من المواضيع المحددة في الوحدات وفق هيكلية (مقدمة، عرض، خاتمة).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>القاعدة الذهبية في اللغة الإنجليزية:</strong> في سؤال "الكلمات المفقودة" (Missing Words)، الإجابة تنحصر دائماً في: حرف جر، حرف عطف، ضمير وصل، فعل كون، أو أداة تعريف/تنكير. لا تضع اسماً أو فعلاً رئيسياً أبداً! وفي الموضوع، علامات الترقيم (البداية بحرف كبير والنهاية بنقطة) تضمن لك درجات إضافية بسهولة.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+  
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>Module 1 | Unit 1: The Law (القانون)</h2>
+        <div class="unit-meta"><span>⚖️ History of Law</span><span>📜 Hammurabi's Code</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 Text Summary: The History of Law (تاريخ القانون)</h3>
+        <p>يتحدث النص عن بداية نشأة القوانين، وأهمية قانون حمورابي في بابل كأول القوانين المكتوبة التي ساهمت في تنظيم المجتمع، وصولاً إلى القانون الروماني.</p>
+        <div class="english-text">
+          "The Code of Hammurabi is one of the oldest deciphered writings of significant length in the world. It consists of 282 laws, with scaled punishments."
+        </div>
+        <ul>
+          <li><strong>أهم المفردات (Vocabulary):</strong>
+            <br>- <span class="highlight">Jury:</span> مجموعة من الأشخاص في المحكمة يقررون براءة أو إدانة المتهم (هيئة المحلفين).
+            <br>- <span class="highlight">Guilty:</span> مذنب (عكسها Innocent بريء).
+            <br>- <span class="highlight">Property:</span> ممتلكات (أشياء يملكها شخص ما).
+          </li>
+          <li><strong>التركيز القواعدي (Grammar Focus):</strong> مراجعة الأزمنة الماضية (Past Simple, Past Continuous, Past Perfect).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>Module 1 | Unit 2: Migration (الهجرة)</h2>
+        <div class="unit-meta"><span>🌍 Human Migration</span><span>🦅 Animal Migration</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 Text Summary: Why do people migrate? (لماذا يهاجر الناس؟)</h3>
+        <p>يسلط الضوء على أسباب هجرة البشر (الاقتصادية، الطبيعية، الكوارث) والمصطلحات المتعلقة بالنزوح، بالإضافة إلى هجرة الحيوانات بحثاً عن الدفء والغذاء.</p>
+        <ul>
+          <li><strong>أهم المفردات (Vocabulary):</strong>
+            <br>- <span class="highlight">Famine:</span> مجاعة (نقص حاد في الغذاء).
+            <br>- <span class="highlight">Emigrate:</span> يهاجر إلى الخارج (يترك بلده).
+            <br>- <span class="highlight">Disaster:</span> كارثة طبيعية أو من صنع الإنسان.
+          </li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-unit2')">📝 سؤال ترجمة امتحاني هام ▼</button>
+        <div class="reveal-box" id="rev-unit2">
+          <strong>ترجم إلى العربية:</strong> <i>"Many people migrate to find better job opportunities."</i><br>
+          <strong>الجواب النموذجي:</strong> "يهاجر الكثير من الناس لإيجاد فرص عمل أفضل."
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>Module 2 | Unit 3: Recycling (إعادة التدوير)</h2>
+        <div class="unit-meta"><span>♻️ Waste Management</span><span>🌱 Saving the Planet</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 Text Summary: Recycling in Switzerland (إعادة التدوير في سويسرا)</h3>
+        <p>يستعرض النص تجربة سويسرا الرائدة في إعادة تدوير النفايات للحفاظ على البيئة وتقليل التلوث، وكيف يمكن تطبيق ذلك في سوريا.</p>
+        <div class="english-text">
+          "Recycling is processing used materials into new, useful products. This is done to reduce the use of raw materials that would have been used."
+        </div>
+        <ul>
+          <li><strong>التركيز القواعدي (Grammar Focus):</strong> المبني للمجهول (Passive Voice) لأنه يُستخدم بكثرة عند وصف العمليات العلمية والبيئية.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="grammar" class="section">
+
+  <div class="unit-card open" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">G</div>
+      <div class="unit-info">
+        <h2>القواعد النحوية الأساسية (Grammar Rules)</h2>
+        <div class="unit-meta"><span>⏱️ Tenses</span><span>🗣️ Reported Speech</span><span>🔀 Passive Voice</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 مفاتيح التمييز بين الأزمنة (Tenses Indicators)</h3>
+        <p>في سؤال تصحيح الفعل، ابحث دائماً عن "الكلمة المفتاحية" (Keyword) في الجملة:</p>
+        <table class="summary-table" style="direction: ltr;">
+          <tr><th>Tense</th><th>Keywords</th><th>Example</th></tr>
+          <tr><td>Present Simple</td><td>always, usually, sometimes, every</td><td>The earth <span class="highlight">goes</span> around the sun.</td></tr>
+          <tr><td>Past Simple</td><td>yesterday, ago, in 1990, last</td><td>I <span class="highlight">visited</span> Palmyra last year.</td></tr>
+          <tr><td>Past Perfect</td><td>after, before, by the time, because</td><td>By the time we arrived, the train <span class="highlight">had left</span>.</td></tr>
+          <tr><td>Present Perfect Continuous</td><td>for, since, all day, recently (with continuity)</td><td>It <span class="highlight">has been raining</span> for two hours.</td></tr>
+        </table>
+      </div>
+
+      <div class="lesson-block">
+        <h3>📌 المبني للمجهول (Passive Voice)</h3>
+        <p>القاعدة الذهبية لتحويل أي جملة للمجهول: <strong>نضع المفعول به أولاً + فعل الكون (B) في نفس زمن الفعل الأصلي + التصريف الثالث للفعل (V3).</strong></p>
+        <ul>
+          <li>المضارع البسيط: am/is/are + V3 (مثال: The room <span class="highlight">is cleaned</span> every day).</li>
+          <li>الماضي البسيط: was/were + V3 (مثال: The window <span class="highlight">was broken</span> yesterday).</li>
+          <li>الأزمنة التامة: have/has/had + been + V3.</li>
+        </ul>
+      </div>
+
+      <div class="lesson-block">
+        <h3>📌 قاعدة التمني (Wish / If only)</h3>
+        <p>سؤال ثابت في الامتحان: أعد كتابة الجملة باستخدام Wish:</p>
+        <ul>
+          <li><strong>إذا كان الموقف في الحاضر:</strong> نستخدم مع Wish الماضي البسيط (Past Simple). 
+            <br><i>مثال:</i> I don't speak French. ➔ I wish I <span class="highlight">spoke</span> French.</li>
+          <li><strong>إذا كان الموقف في الماضي (ندم):</strong> نستخدم مع Wish الماضي التام (Past Perfect).
+            <br><i>مثال:</i> I lost my keys. ➔ I wish I <span class="highlight">hadn't lost</span> my keys.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="writing" class="section">
+  <div class="unit-card open" id="u5">
+    <div class="unit-header">
+      <div class="unit-num">W</div>
+      <div class="unit-info">
+        <h2>هيكل الموضوع الإنجليزي (Essay Writing)</h2>
+        <div class="unit-meta"><span>📐 الهيكلية المعتمدة</span><span>🏆 ضمان الـ 50 درجة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الخطة المعتمدة لكتابة موضوع متكامل</h3>
+        <p>الموضوع الإنجليزي يعتمد على تسلسل منطقي. إذا واجهت صعوبة في التعبير، التزم بهذا القالب:</p>
+        <ol>
+          <li><strong>المقدمة (Introduction):</strong> جملة عامة عن الموضوع المعطى. 
+            <br><span class="english-text">"Undoubtedly, [Topic] plays a vital role in our lives and has become a matter of great importance."</span></li>
+          <li><strong>العرض (Body Paragraph):</strong> مناقشة الأفكار المطلوبة في نص السؤال باستخدام أدوات الربط (First of all, Moreover, In addition).
+            <br><span class="english-text">"First of all, there are many reasons why [Topic] is important. For example, [Idea 1]. Moreover, it helps to [Idea 2]."</span></li>
+          <li><strong>الخاتمة (Conclusion):</strong> خلاصة سريعة ورأيك الشخصي.
+            <br><span class="english-text">"To sum up, I strongly believe that we must pay more attention to [Topic] for a better future."</span></li>
+        </ol>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-writing')">⚠️ خطأ مدمر في كتابة الموضوع! ▼</button>
+        <div class="reveal-box" id="rev-writing">
+          <strong>احذر!</strong> "حفظ موضوع بصم ووضعه مهما كان السؤال". المصحح يبحث عن "تغطية الأفكار المطلوبة في نص السؤال". إذا كان السؤال يطلب "أسباب الهجرة والحلول"، وموضوعك يتحدث عن "فوائد الهجرة"، ستفقد أكثر من نصف العلامة فوراً. اقرأ المطلوب (Prompts) بدقة واستخدمها كعناوين فرعية لمقاطعك.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:30px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">🎭 محاكي القواعد: محلل البنى النحوية</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#64748b; font-size: 1.1rem;">اختر الجملة من القائمة ليقوم المحاكي بتشريح القاعدة المستخدمة، تحديد نوعها، وسبب استخدامها (مهم جداً لسؤال Rewrite the following sentences).</p>
+
+    <div class="sim-box" style="direction: ltr; text-align: left;">
+      <div class="sim-field">
+        <label style="color: var(--accent-light);">Select a sentence to analyze:</label>
+        <select id="grammarSelect" onchange="analyzeGrammar()">
+          <option value="" disabled selected>-- Choose a grammar structure --</option>
+          <option value="1">I wish I had studied harder for the exam.</option>
+          <option value="2">He had his car repaired yesterday.</option>
+          <option value="3">By the time the police arrived, the thief had escaped.</option>
+          <option value="4">Hardly had I arrived when the phone rang.</option>
+        </select>
+      </div>
+      
+      <div class="calc-result-box" id="grammar-result" style="display: none; direction: ltr;">
+        <h3 style="color:var(--accent-light); margin-bottom:15px; font-size:1.4rem; font-family: 'Segoe UI', serif;" id="g-res-title"></h3>
+        <div style="font-size: 1.1rem; margin-bottom: 8px;" id="g-res-elements"></div>
+        <div style="font-size: 1.25rem; font-weight: bold; color: #fb7185; margin: 15px 0;" id="g-res-type"></div>
+        <div style="font-size: 1.05rem; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-light); color: #e2e8f0;" id="g-res-value"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة - بكالوريا لغة إنجليزية (Emar 12)</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبر دقة حفظك للقواعد والمفردات من خلال هذا النموذج الامتحاني المصغر:</p>
+    <div id="english-quiz-box" style="direction: ltr;"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// فتح وإغلاق الوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// كشف التلميحات
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  const isVisible = box.classList.contains('visible');
+  
+  if(boxId === 'rev-unit2') {
+    btn.innerHTML = isVisible ? '❌ إخفاء الجواب ▲' : '📝 سؤال ترجمة امتحاني هام ▼';
+  } else if(boxId === 'rev-writing') {
+    btn.innerHTML = isVisible ? '❌ إخفاء التحذير ▲' : '⚠️ خطأ مدمر في كتابة الموضوع! ▼';
+  }
+}
+
+// محاكي القواعد
+const grammarData = {
+  "1": {
+    text: '"I wish I had studied harder for the exam."',
+    elements: "Subject (I) + wish + Subject (I) + Past Perfect (had studied).",
+    type: "Rule: Expressing Regret (التعبير عن الندم)",
+    value: "Explanation: We use 'wish' + Past Perfect to express regret about a situation that happened in the past. (The student didn't study hard, and now regrets it)."
+  },
+  "2": {
+    text: '"He had his car repaired yesterday."',
+    elements: "Subject (He) + had/got + Object (his car) + Past Participle (V3 - repaired).",
+    type: "Rule: Causative Verbs (الأفعال السببية)",
+    value: "Explanation: Used to say that we arranged for someone else to do something for us. He didn't repair the car himself; a mechanic did it."
+  },
+  "3": {
+    text: '"By the time the police arrived, the thief had escaped."',
+    elements: "By the time + Past Simple (arrived), Past Perfect (had escaped).",
+    type: "Rule: Past Perfect (الماضي التام)",
+    value: "Explanation: We use the Past Perfect to show that one action happened before another action in the past. The escaping happened FIRST, then the police arrived SECOND."
+  },
+  "4": {
+    text: '"Hardly had I arrived when the phone rang."',
+    elements: "Hardly + auxiliary verb (had) + subject (I) + main verb (arrived) ... when ...",
+    type: "Rule: Inversion (القلب النحوي)",
+    value: "Explanation: When sentences begin with negative words like 'Hardly', 'Scarcely', or 'Never' for emphasis, the subject and auxiliary verb are inverted (swapped)."
+  }
+};
+
+function analyzeGrammar() {
+  const selection = document.getElementById('grammarSelect').value;
+  if (!selection) return;
+  
+  const data = grammarData[selection];
+  
+  document.getElementById('g-res-title').innerText = data.text;
+  document.getElementById('g-res-elements').innerHTML = `<strong style="color:#fff;">Structure Analysis:</strong><br>${data.elements}`;
+  document.getElementById('g-res-type').innerText = data.type;
+  document.getElementById('g-res-value').innerHTML = `<strong>Usage:</strong><br>${data.value}`;
+  
+  document.getElementById('grammar-result').style.display = 'block';
+}
+
+// قاعدة بيانات الأسئلة المؤتمتة (انجليزي)
+const englishQuizData = [
+  { q: "1. By the time we arrived at the station, the train _________.", opts: ["left", "has left", "had left", "was leaving"], ans: 2 },
+  { q: "2. The law _________ to protect citizens and keep society safe.", opts: ["makes", "is made", "made", "has made"], ans: 1 },
+  { q: "3. I am really thirsty. I wish I _________ some water with me.", opts: ["have", "had", "will have", "am having"], ans: 1 },
+  { q: "4. The man _________ wallet was stolen reported it to the police.", opts: ["who", "which", "whose", "whom"], ans: 2 },
+  { q: "5. He didn't build the house himself. He _________ it built.", opts: ["had", "did", "made", "was"], ans: 0 }
+];
+
+function buildEnglishQuiz() {
+  const container = document.getElementById('english-quiz-box');
+  container.innerHTML = '';
+  englishQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkEnglishAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkEnglishAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === englishQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[englishQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل المبدئي
+window.onload = function() {
+  buildEnglishQuiz();
+};
+</script>
+</body>
+</html>
